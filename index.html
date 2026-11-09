@@ -112,6 +112,16 @@ body{background:radial-gradient(circle,rgba(255,255,255,.6) 3px,transparent 4px)
 .pgDots i.on{background:var(--tomato);transform:scale(1.3)}
 @media (prefers-reduced-motion:reduce){.navBtn.next{animation:none}}
 
+.musicBtn{width:50px;height:50px;flex:none;border:none;border-radius:50%;background:var(--paper);padding:7px;display:grid;place-items:center;
+  box-shadow:0 4px 0 #B9A6F7,inset 0 0 0 3px #DCD2FF;transition:transform .1s}
+.musicBtn svg{width:100%;height:100%}
+.musicBtn:not(.off) svg{animation:bob 1.2s ease-in-out infinite}
+.musicBtn .slash{display:none}.musicBtn.off .slash{display:block}
+.musicBtn.off{background:#EEF1F5;box-shadow:0 4px 0 #C3CBD6}
+.musicBtn:active{transform:translateY(3px)}
+@keyframes bob{0%,100%{transform:rotate(-8deg)}50%{transform:rotate(8deg) translateY(-2px)}}
+@media (prefers-reduced-motion:reduce){.musicBtn svg{animation:none!important}}
+
 /* overlays */
 .over{position:fixed;inset:0;background:rgba(34,49,74,.4);display:grid;place-items:center;z-index:40;padding:20px}
 .over .box{background:var(--paper);border-radius:30px;padding:26px 30px;text-align:center;border:5px solid var(--sun);max-width:320px}
@@ -129,7 +139,7 @@ body{background:radial-gradient(circle,rgba(255,255,255,.6) 3px,transparent 4px)
 
 <div id="app">
   <section class="screen" id="home">
-    <div class="top"><h1>บ้านเด็กเก่ง</h1><div class="stars">⭐ <b>0</b></div></div>
+    <div class="top"><h1>บ้านเด็กเก่ง</h1><button class="musicBtn" aria-label="ปิดเพลง"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M18 35V13l20-5v22" fill="none" stroke="#7B5CF0" stroke-width="4" stroke-linejoin="round"/><path d="M18 13l20-5" stroke="#7B5CF0" stroke-width="7"/><ellipse cx="13" cy="36" rx="7" ry="5.5" fill="#7B5CF0"/><ellipse cx="33" cy="31" rx="7" ry="5.5" fill="#FF6B4A"/><path class="slash" d="M7 7L41 41" stroke="#FF6B4A" stroke-width="5" stroke-linecap="round"/></svg></button><div class="stars">⭐ <b>0</b></div></div>
     <p class="sub">เลือกเกมที่อยากเล่นได้เลย</p>
     <div class="tiles">
       <button class="tile t-thai" data-go="thai"><img class="pic" data-p="th_ก" alt=""><div class="badge">ก</div><span class="lbl">ก ไก่ จับคู่ภาพ</span></button>
@@ -141,7 +151,7 @@ body{background:radial-gradient(circle,rgba(255,255,255,.6) 3px,transparent 4px)
   </section>
 
   <section class="screen" id="match" hidden>
-    <div class="top"><button class="homeBtn" data-home aria-label="กลับหน้าแรก"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="31" y="7" width="7" height="11" rx="2.5" fill="#FF8FA3"/><path d="M10 22V38a4 4 0 0 0 4 4h20a4 4 0 0 0 4-4V22L24 10Z" fill="#FFE08A"/><path d="M5 24L24 7L43 24" fill="none" stroke="#FF6B4A" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><rect x="20" y="29" width="8" height="13" rx="4" fill="#7B5CF0"/><path d="M16 25.5c-1.6-1.6-4 .2-2.6 2l2.6 2.6 2.6-2.6c1.4-1.8-1-3.6-2.6-2z" fill="#FF6B4A"/><circle cx="25.5" cy="36" r="1.2" fill="#FFE08A"/></svg></button><h2 id="mTitle">จับคู่</h2><div class="stars">⭐ <b>0</b></div></div>
+    <div class="top"><button class="homeBtn" data-home aria-label="กลับหน้าแรก"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="31" y="7" width="7" height="11" rx="2.5" fill="#FF8FA3"/><path d="M10 22V38a4 4 0 0 0 4 4h20a4 4 0 0 0 4-4V22L24 10Z" fill="#FFE08A"/><path d="M5 24L24 7L43 24" fill="none" stroke="#FF6B4A" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><rect x="20" y="29" width="8" height="13" rx="4" fill="#7B5CF0"/><path d="M16 25.5c-1.6-1.6-4 .2-2.6 2l2.6 2.6 2.6-2.6c1.4-1.8-1-3.6-2.6-2z" fill="#FF6B4A"/><circle cx="25.5" cy="36" r="1.2" fill="#FFE08A"/></svg></button><h2 id="mTitle">จับคู่</h2><button class="musicBtn" aria-label="ปิดเพลง"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M18 35V13l20-5v22" fill="none" stroke="#7B5CF0" stroke-width="4" stroke-linejoin="round"/><path d="M18 13l20-5" stroke="#7B5CF0" stroke-width="7"/><ellipse cx="13" cy="36" rx="7" ry="5.5" fill="#7B5CF0"/><ellipse cx="33" cy="31" rx="7" ry="5.5" fill="#FF6B4A"/><path class="slash" d="M7 7L41 41" stroke="#FF6B4A" stroke-width="5" stroke-linecap="round"/></svg></button><div class="stars">⭐ <b>0</b></div></div>
     <p class="hint" id="mHint">ลากเส้นจากซ้ายไปขวา หรือแตะทีละอัน</p>
     <div class="play" id="play">
       <svg class="lines" id="lines"></svg>
@@ -152,7 +162,7 @@ body{background:radial-gradient(circle,rgba(255,255,255,.6) 3px,transparent 4px)
   </section>
 
   <section class="screen" id="dress" hidden>
-    <div class="top"><button class="homeBtn" data-home aria-label="กลับหน้าแรก"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="31" y="7" width="7" height="11" rx="2.5" fill="#FF8FA3"/><path d="M10 22V38a4 4 0 0 0 4 4h20a4 4 0 0 0 4-4V22L24 10Z" fill="#FFE08A"/><path d="M5 24L24 7L43 24" fill="none" stroke="#FF6B4A" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><rect x="20" y="29" width="8" height="13" rx="4" fill="#7B5CF0"/><path d="M16 25.5c-1.6-1.6-4 .2-2.6 2l2.6 2.6 2.6-2.6c1.4-1.8-1-3.6-2.6-2z" fill="#FF6B4A"/><circle cx="25.5" cy="36" r="1.2" fill="#FFE08A"/></svg></button><h2>แต่งตัวให้น้อง</h2><div class="stars">⭐ <b>0</b></div></div>
+    <div class="top"><button class="homeBtn" data-home aria-label="กลับหน้าแรก"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="31" y="7" width="7" height="11" rx="2.5" fill="#FF8FA3"/><path d="M10 22V38a4 4 0 0 0 4 4h20a4 4 0 0 0 4-4V22L24 10Z" fill="#FFE08A"/><path d="M5 24L24 7L43 24" fill="none" stroke="#FF6B4A" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><rect x="20" y="29" width="8" height="13" rx="4" fill="#7B5CF0"/><path d="M16 25.5c-1.6-1.6-4 .2-2.6 2l2.6 2.6 2.6-2.6c1.4-1.8-1-3.6-2.6-2z" fill="#FF6B4A"/><circle cx="25.5" cy="36" r="1.2" fill="#FFE08A"/></svg></button><h2>แต่งตัวให้น้อง</h2><button class="musicBtn" aria-label="ปิดเพลง"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M18 35V13l20-5v22" fill="none" stroke="#7B5CF0" stroke-width="4" stroke-linejoin="round"/><path d="M18 13l20-5" stroke="#7B5CF0" stroke-width="7"/><ellipse cx="13" cy="36" rx="7" ry="5.5" fill="#7B5CF0"/><ellipse cx="33" cy="31" rx="7" ry="5.5" fill="#FF6B4A"/><path class="slash" d="M7 7L41 41" stroke="#FF6B4A" stroke-width="5" stroke-linecap="round"/></svg></button><div class="stars">⭐ <b>0</b></div></div>
     <div class="ask">
       <div class="words"><div class="lead">หยิบอันนี้ให้น้องหน่อย</div><div class="w"><span id="askTh">หมวก</span><small id="askEn">hat</small></div></div>
       <button class="say" id="sayAgain" aria-label="ฟังอีกครั้ง">🔊</button>
@@ -194,13 +204,36 @@ function buf(k){if(!BUF[k]){const a=audio();if(!a||!S[k])return Promise.resolve(
 let live=[],timers=[];
 function hush(){live.forEach(s=>{try{s.stop()}catch(e){}});live=[];timers.forEach(clearTimeout);timers=[];if('speechSynthesis' in window)try{speechSynthesis.cancel()}catch(e){}}
 function later(fn,ms){timers.push(setTimeout(fn,ms))}
-async function playRec(k,vol=1,maxDur){const a=audio(),b=await buf(k);if(!a||!b)return 0;const s=a.createBufferSource(),g=a.createGain();s.buffer=b;g.gain.value=vol;s.connect(g).connect(a.destination);const t=a.currentTime;s.start(t);
+async function playRec(k,vol=1,maxDur){const a=audio(),b=await buf(k);if(!a||!b)return 0;duck((maxDur||b.duration)+.3);const s=a.createBufferSource(),g=a.createGain();s.buffer=b;g.gain.value=vol;s.connect(g).connect(a.destination);const t=a.currentTime;s.start(t);
   if(maxDur){g.gain.setValueAtTime(vol,t+maxDur-.3);g.gain.linearRampToValueAtTime(0,t+maxDur);s.stop(t+maxDur)}live.push(s);return maxDur||b.duration}
+/* ---------- background music: original gentle music-box loop, synthesized (no audio files) ---------- */
+let musicOn=store.get('music',true),mus=null;
+const MEL=[[76,79,84,79,76,79,81,79],[76,0,72,0,74,76,72,0],[77,81,84,81,77,81,79,77],[74,0,79,0,74,76,77,0],
+  [76,79,84,79,81,79,76,72],[81,0,79,76,72,0,76,0],[77,76,74,72,74,77,76,74],[72,76,79,0,72,0,0,0]];
+const BASS=[[48,55],[45,52],[41,48],[43,50],[48,55],[45,52],[41,48],[48,43]];
+const STEP=.3,MVOL=.09,hz=m=>440*Math.pow(2,(m-69)/12);
+function mnote(m,t,dur,vol,type){const o=ac.createOscillator(),g=ac.createGain();o.type=type;o.frequency.value=hz(m);
+  g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(vol,t+.01);g.gain.exponentialRampToValueAtTime(.0005,t+dur);o.connect(g).connect(mus.gain);o.start(t);o.stop(t+dur+.05)}
+function musicTick(){if(!mus||!ac)return;if(mus.next<ac.currentTime)mus.next=ac.currentTime+.05;
+  while(mus.next<ac.currentTime+.6){const i=mus.step%64,bar=i>>3,pos=i&7,alt=(mus.step>>6)&1,t=mus.next,n=MEL[bar][pos];
+    if(n){if(alt)mnote(n-12,t,.5,.45,'triangle');else{mnote(n,t,.9,.5,'sine');mnote(n+12,t,.35,.12,'sine')}}
+    if(pos===0||pos===4)mnote(BASS[bar][pos>>2],t,1.1,.3,'triangle');
+    mus.next+=STEP;mus.step++}}
+function startMusic(){if(!musicOn||mus)return;const a=audio();if(!a)return;const g=a.createGain();g.gain.value=MVOL;g.connect(a.destination);
+  mus={gain:g,next:a.currentTime+.1,step:0,timer:setInterval(musicTick,120)};musicTick()}
+function stopMusic(){if(!mus)return;const m=mus;mus=null;clearInterval(m.timer);m.gain.gain.cancelScheduledValues(ac.currentTime);m.gain.gain.setTargetAtTime(0,ac.currentTime,.08);setTimeout(()=>m.gain.disconnect(),700)}
+/* music steps back while animal sounds, cheers and spoken words play */
+function duck(sec){if(!mus||!ac)return;const g=mus.gain.gain,t=ac.currentTime;g.cancelScheduledValues(t);g.setTargetAtTime(MVOL*.2,t,.05);g.setTargetAtTime(MVOL,t+sec,.4)}
+function paintMusic(){$$('.musicBtn').forEach(b=>{b.classList.toggle('off',!musicOn);b.setAttribute('aria-label',musicOn?'ปิดเพลง':'เปิดเพลง')})}
+$$('.musicBtn').forEach(b=>b.onclick=()=>{musicOn=!musicOn;store.set('music',musicOn);paintMusic();musicOn?startMusic():stopMusic()});
+paintMusic();
+addEventListener('pointerdown',()=>startMusic(),true);
+document.addEventListener('visibilitychange',()=>{if(!ac)return;try{document.hidden?ac.suspend():ac.resume()}catch(e){}});
 function ding(){[523,659,784,1047].forEach((f,i)=>tone(f,i*.09,.3,'triangle',.18))}
 /* happy: game "achievement" jingle + short applause */
-function cheer(){if(S.tada)playRec('tada',.9);else ding();later(()=>playRec('applause',.7,1.8),250)}
+function cheer(){duck(4.5);if(S.tada)playRec('tada',.9);else ding();later(()=>playRec('applause',.7,1.8),250)}
 /* wrong: loud game-show buzzer */
-function buzz(){const a=audio();if(!a)return;const t=a.currentTime,lp=a.createBiquadFilter(),g=a.createGain();lp.type='lowpass';lp.frequency.value=2200;
+function buzz(){const a=audio();if(!a)return;duck(1.2);const t=a.currentTime,lp=a.createBiquadFilter(),g=a.createGain();lp.type='lowpass';lp.frequency.value=2200;
   g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.38,t+.02);g.gain.setValueAtTime(.38,t+.62);g.gain.linearRampToValueAtTime(0,t+.75);lp.connect(g).connect(a.destination);
   [[110,'sawtooth'],[116,'sawtooth'],[220,'square'],[331,'square']].forEach(([f,ty])=>{const o=a.createOscillator(),og=a.createGain();o.type=ty;o.frequency.value=f;og.gain.value=ty==='square'?.35:.6;o.connect(og).connect(lp);o.start(t);o.stop(t+.78);live.push(o)})}
 function clap(n=12){const a=audio();if(!a)return;if(!noiseBuf){noiseBuf=a.createBuffer(1,a.sampleRate*.2,a.sampleRate);const d=noiseBuf.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=Math.random()*2-1}
@@ -210,7 +243,7 @@ function rooster(){const a=audio();if(!a)return;const t=a.currentTime,o=a.create
   const fp=[[0,520],[.12,650],[.17,560],[.3,720],[.36,660],[.5,860],[1.05,800],[1.35,560]];fp.forEach(([d,v],i)=>i?o.frequency.linearRampToValueAtTime(v,t+d):o.frequency.setValueAtTime(v,t+d));
   const on=[[0,.13],[.17,.31],[.36,1.35]];g.gain.setValueAtTime(0,t);on.forEach(([s,e])=>{g.gain.linearRampToValueAtTime(.32,t+s+.02);g.gain.setValueAtTime(.32,t+e-.04);g.gain.linearRampToValueAtTime(0,t+e)});
   o.connect(f).connect(g).connect(a.destination);o.start(t);lfo.start(t);o.stop(t+1.4);lfo.stop(t+1.4)}
-function speak(parts){if(!('speechSynthesis' in window))return;try{speechSynthesis.cancel();const vs=speechSynthesis.getVoices();
+function speak(parts){if(!('speechSynthesis' in window))return;duck(3);try{speechSynthesis.cancel();const vs=speechSynthesis.getVoices();
   parts.forEach(([text,lang])=>{const u=new SpeechSynthesisUtterance(text);u.lang=lang;u.rate=.8;const v=vs.find(v=>v.lang.replace('_','-').startsWith(lang.slice(0,2)));if(v)u.voice=v;speechSynthesis.speak(u)})}catch(e){}}
 if('speechSynthesis' in window){try{speechSynthesis.getVoices()}catch(e){}}
 
