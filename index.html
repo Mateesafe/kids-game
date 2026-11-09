@@ -90,6 +90,28 @@ img{-webkit-user-drag:none;user-drag:none;pointer-events:none}
 .item.used{opacity:.25;pointer-events:none}
 .ghost{position:fixed;z-index:50;pointer-events:none;transform:translate(-50%,-50%) scale(1.4);width:90px;height:60px}
 
+/* cute theme: polka-dot sky, house button, chunky arrows */
+body{background:radial-gradient(circle,rgba(255,255,255,.6) 3px,transparent 4px) 0 0/30px 30px,var(--sky)}
+.homeBtn{width:56px;height:56px;flex:none;border:none;border-radius:20px;background:var(--paper);padding:5px;display:grid;place-items:center;
+  box-shadow:0 5px 0 #F7A8B8,inset 0 0 0 3px #FFD6E0;transition:transform .1s}
+.homeBtn svg{width:100%;height:100%}
+.homeBtn:active,.navBtn:active{transform:translateY(4px)}
+.homeBtn:active{box-shadow:0 1px 0 #F7A8B8,inset 0 0 0 3px #FFD6E0}
+.pager{display:flex;align-items:center;gap:12px;padding-bottom:2px}
+.navBtn{width:74px;height:58px;flex:none;border:none;border-radius:999px;padding:6px;display:grid;place-items:center;transition:transform .1s}
+.navBtn svg{width:40px;height:40px}
+.navBtn.prev{background:var(--berry);box-shadow:0 6px 0 #5A3FC8}
+.navBtn.prev svg{transform:scaleX(-1)}
+.navBtn.next{background:var(--grass);box-shadow:0 6px 0 #17804A;animation:nudge 1.8s ease-in-out infinite}
+.navBtn.prev:active{box-shadow:0 2px 0 #5A3FC8}.navBtn.next:active{box-shadow:0 2px 0 #17804A;animation:none}
+@keyframes nudge{0%,70%,100%{transform:none}80%{transform:translateX(5px)}90%{transform:translateX(-2px)}}
+.pgInfo{flex:1;min-width:0;background:var(--paper);border-radius:999px;border:3px solid var(--sun);padding:4px 10px;text-align:center}
+.pgInfo b{display:block;font-size:22px;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pgDots{display:flex;justify-content:center;flex-wrap:wrap;gap:5px;padding:2px 0 3px}
+.pgDots i{width:9px;height:9px;border-radius:50%;background:var(--line)}
+.pgDots i.on{background:var(--tomato);transform:scale(1.3)}
+@media (prefers-reduced-motion:reduce){.navBtn.next{animation:none}}
+
 /* overlays */
 .over{position:fixed;inset:0;background:rgba(34,49,74,.4);display:grid;place-items:center;z-index:40;padding:20px}
 .over .box{background:var(--paper);border-radius:30px;padding:26px 30px;text-align:center;border:5px solid var(--sun);max-width:320px}
@@ -119,17 +141,18 @@ img{-webkit-user-drag:none;user-drag:none;pointer-events:none}
   </section>
 
   <section class="screen" id="match" hidden>
-    <div class="top"><button class="back" data-home aria-label="กลับหน้าแรก">‹</button><h2 id="mTitle">จับคู่</h2><div class="stars">⭐ <b>0</b></div></div>
+    <div class="top"><button class="homeBtn" data-home aria-label="กลับหน้าแรก"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="31" y="7" width="7" height="11" rx="2.5" fill="#FF8FA3"/><path d="M10 22V38a4 4 0 0 0 4 4h20a4 4 0 0 0 4-4V22L24 10Z" fill="#FFE08A"/><path d="M5 24L24 7L43 24" fill="none" stroke="#FF6B4A" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><rect x="20" y="29" width="8" height="13" rx="4" fill="#7B5CF0"/><path d="M16 25.5c-1.6-1.6-4 .2-2.6 2l2.6 2.6 2.6-2.6c1.4-1.8-1-3.6-2.6-2z" fill="#FF6B4A"/><circle cx="25.5" cy="36" r="1.2" fill="#FFE08A"/></svg></button><h2 id="mTitle">จับคู่</h2><div class="stars">⭐ <b>0</b></div></div>
     <p class="hint" id="mHint">ลากเส้นจากซ้ายไปขวา หรือแตะทีละอัน</p>
     <div class="play" id="play">
       <svg class="lines" id="lines"></svg>
       <div class="col" id="colL"></div>
       <div class="col" id="colR"></div>
     </div>
+    <div class="pager"><button class="navBtn prev" id="pgPrev" aria-label="หน้าก่อน"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M19 12L31 24L19 36" fill="none" stroke="#fff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div class="pgInfo"><b id="pgLabel">ก – ง</b><div class="pgDots" id="pgDots"></div></div><button class="navBtn next" id="pgNext" aria-label="หน้าถัดไป"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M19 12L31 24L19 36" fill="none" stroke="#fff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
   </section>
 
   <section class="screen" id="dress" hidden>
-    <div class="top"><button class="back" data-home aria-label="กลับหน้าแรก">‹</button><h2>แต่งตัวให้น้อง</h2><div class="stars">⭐ <b>0</b></div></div>
+    <div class="top"><button class="homeBtn" data-home aria-label="กลับหน้าแรก"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="31" y="7" width="7" height="11" rx="2.5" fill="#FF8FA3"/><path d="M10 22V38a4 4 0 0 0 4 4h20a4 4 0 0 0 4-4V22L24 10Z" fill="#FFE08A"/><path d="M5 24L24 7L43 24" fill="none" stroke="#FF6B4A" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><rect x="20" y="29" width="8" height="13" rx="4" fill="#7B5CF0"/><path d="M16 25.5c-1.6-1.6-4 .2-2.6 2l2.6 2.6 2.6-2.6c1.4-1.8-1-3.6-2.6-2z" fill="#FF6B4A"/><circle cx="25.5" cy="36" r="1.2" fill="#FFE08A"/></svg></button><h2>แต่งตัวให้น้อง</h2><div class="stars">⭐ <b>0</b></div></div>
     <div class="ask">
       <div class="words"><div class="lead">หยิบอันนี้ให้น้องหน่อย</div><div class="w"><span id="askTh">หมวก</span><small id="askEn">hat</small></div></div>
       <button class="say" id="sayAgain" aria-label="ฟังอีกครั้ง">🔊</button>
@@ -209,15 +232,21 @@ const MODES={
 
 /* ---------- navigation ---------- */
 function show(id){$$('.screen').forEach(s=>s.hidden=s.id!==id);if(id==='home')hush()}
-$$('[data-home]').forEach(b=>b.onclick=()=>{clearTimeout(dress.timer);show('home')});
+$$('[data-home]').forEach(b=>b.onclick=()=>{clearTimeout(dress.timer);$('#over').hidden=true;show('home')});
 $$('[data-go]').forEach(b=>b.onclick=()=>{audio();warm();const g=b.dataset.go;g==='dress'?startDress():startMatch(g)});
 
 /* ---------- matching game ---------- */
 const play=$('#play'),lines=$('#lines');
-const cur={kind:null,pairs:[],done:new Set(),sel:null,drag:null,busy:false};
-function startMatch(kind){cur.kind=kind;$('#mTitle').textContent=MODES[kind].title;$('#mHint').textContent=MODES[kind].hint;show('match');newRound()}
+const cur={kind:null,page:0,pairs:[],done:new Set(),sel:null,drag:null,busy:false};
+/* split a list into pages of at most 4, sizes kept even (9 -> 3,3,3) */
+function pagesOf(kind){const d=MODES[kind].data,n=Math.ceil(d.length/4),out=[];let i=0;for(let k=0;k<n;k++){const sz=Math.ceil((d.length-i)/(n-k));out.push(d.slice(i,i+sz));i+=sz}return out}
+function goPage(step){const n=pagesOf(cur.kind).length;hush();$('#over').hidden=true;cur.page=(cur.page+step+n)%n;store.set('page_'+cur.kind,cur.page);newRound()}
+function paintPager(){const ps=pagesOf(cur.kind),pg=ps[cur.page];$('#pgLabel').textContent=cur.kind==='fruit'?`หน้า ${cur.page+1} / ${ps.length}`:`${pg[0].l} – ${pg[pg.length-1].l}`;
+  $('#pgDots').innerHTML=ps.map((_,i)=>`<i class="${i===cur.page?'on':''}"></i>`).join('')}
+$('#pgPrev').onclick=()=>{audio();goPage(-1)};$('#pgNext').onclick=()=>{audio();goPage(1)};
+function startMatch(kind){cur.kind=kind;cur.page=Math.min(store.get('page_'+kind,0),pagesOf(kind).length-1);$('#mTitle').textContent=MODES[kind].title;$('#mHint').textContent=MODES[kind].hint;show('match');newRound()}
 function cardHTML(p,side,inner){return `<button class="card" data-id="${p.id}" data-side="${side}">${inner}<i class="dot"></i></button>`}
-function newRound(){const M=MODES[cur.kind],pick=shuffle([...M.data]).slice(0,4);cur.pairs=pick;cur.done=new Set();cur.sel=null;cur.busy=false;
+function newRound(){const M=MODES[cur.kind],pick=pagesOf(cur.kind)[cur.page];paintPager();cur.pairs=pick;cur.done=new Set();cur.sel=null;cur.busy=false;
   $('#colL').innerHTML=shuffle([...pick]).map(p=>cardHTML(p,'L',M.L(p))).join('');
   $('#colR').innerHTML=shuffle([...pick]).map(p=>cardHTML(p,'R',M.R(p))).join('');requestAnimationFrame(()=>drawLines())}
 function dot(card){const r=card.getBoundingClientRect(),pr=play.getBoundingClientRect();return{x:(card.dataset.side==='L'?r.right:r.left)-pr.left,y:r.top+r.height/2-pr.top}}
@@ -239,7 +268,7 @@ function tap(c){if(cur.sel&&cur.sel!==c&&cur.sel.dataset.side!==c.dataset.side){
 function tryMatch(a,b){setSel(null);const l=a.dataset.side==='L'?a:b,r=l===a?b:a;
   if(l.dataset.id===r.dataset.id){const p=cur.pairs.find(p=>p.id===l.dataset.id);cur.done.add(p.id);l.classList.add('done');r.classList.add('done');
     r.insertAdjacentHTML('beforeend',`<span class="word">${esc(p.word)}</span>`);drawLines();success(p);
-    if(cur.done.size===cur.pairs.length){cur.busy=true;later(()=>celebrate('เก่งมาก!','จับคู่ถูกครบทุกข้อเลย','เล่นต่อ',newRound),p.sfx?6400:3600)}}
+    if(cur.done.size===cur.pairs.length){cur.busy=true;later(()=>celebrate('เก่งมาก!','จับคู่ถูกครบทุกข้อเลย','หน้าถัดไป ▶',()=>goPage(1)),p.sfx?6400:3600)}}
   else{hush();buzz();drawLines(curve(dot(l),dot(r),'var(--tomato)'));[l,r].forEach(x=>{x.classList.remove('shake');void x.offsetWidth;x.classList.add('shake')});setTimeout(()=>drawLines(),450)}}
 /* correct: cheer first, then the animal's own sound, then the word read aloud */
 function voiceOf(p){later(async()=>{const d=p.sfx?await playRec(p.sfx):0;later(()=>speak([[p.say,p.lang]]),d*1000+150)},0)}
