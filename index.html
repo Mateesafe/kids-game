@@ -134,6 +134,55 @@ body{background:radial-gradient(circle,rgba(255,255,255,.6) 3px,transparent 4px)
 .credits button{align-self:center;font-size:18px;padding:8px 28px}
 .conf{position:fixed;top:-20px;width:12px;height:18px;border-radius:3px;z-index:45;animation:fall 2s linear forwards;pointer-events:none}
 @keyframes fall{to{transform:translateY(110vh) rotate(540deg)}}
+/* iPad: use the whole screen, everything bigger for small fingers */
+@media (min-width:700px){
+ #app{max-width:1180px}
+ body{padding-left:max(28px,env(safe-area-inset-left,0px));padding-right:max(28px,env(safe-area-inset-right,0px));padding-block:16px}
+ .screen{gap:16px}
+ .top{gap:14px}.top h1{font-size:52px}.top h2{font-size:36px}
+ .homeBtn{width:72px;height:72px;border-radius:24px;padding:7px}
+ .musicBtn{width:64px;height:64px;padding:9px}
+ .stars{font-size:24px;padding:6px 18px;border-width:4px}
+ .sub,.hint{font-size:21px}
+ .tiles{gap:22px}
+ .tile{border-radius:34px}
+ .tile .badge{min-width:72px;height:72px;font-size:44px;border-radius:22px;top:14px;left:14px}
+ .tile span.lbl{font-size:28px;padding:12px 18px}
+ .t-dress svg{inset:10px 0 56px;height:calc(100% - 66px)}
+ .credit-link{font-size:17px}
+ .col{width:40%;gap:16px}
+ .card{border-radius:28px;border-width:5px}
+ .card .ph{border-radius:22px;padding:8px}
+ .card .dot{width:26px;height:26px;margin-top:-13px;border-width:4px}
+ .card[data-side="L"] .dot{right:-17px}.card[data-side="R"] .dot{left:-17px}
+ .card.done::after{width:40px;height:40px;font-size:24px;top:8px;right:10px}
+ .glyph{font-size:min(124px,13vh)}.glyph.en{font-size:min(104px,11vh)}
+ .word{font-size:26px;padding:4px 18px;bottom:12px}
+ .pager{gap:18px}
+ .navBtn{width:108px;height:78px}.navBtn svg{width:54px;height:54px}
+ .pgInfo{border-width:4px;padding:6px 14px}.pgInfo b{font-size:32px}.pgDots{gap:8px}.pgDots i{width:12px;height:12px}
+ .ask{border-radius:28px;padding:12px 18px}.ask .lead{font-size:19px;margin-bottom:4px}.ask .w{font-size:48px;line-height:1.25}
+ .say{width:72px;height:72px;font-size:34px}
+ .tray{grid-template-columns:repeat(6,minmax(0,1fr));gap:12px}
+ .item{border-radius:22px;padding:10px 4px 8px}.item svg{height:64px;width:96px}.item .n{font-size:19px}
+ .ghost{width:130px;height:86px}
+ .over .box{max-width:480px;padding:36px 44px;border-radius:38px}.over .box b{font-size:58px}.over .box p{font-size:24px}
+ .over button{font-size:28px;padding:16px 46px}
+ .credits .box{max-width:720px}.credits ol{font-size:14px}
+}
+/* iPad held sideways: the 4 game tiles sit in one row */
+@media (min-width:700px) and (orientation:landscape){
+ .tiles{grid-template-columns:repeat(4,1fr);grid-template-rows:1fr}
+ .play{flex-direction:column;gap:12%}
+ .col{width:100%;flex-direction:row;flex:1;gap:18px}
+ .card .dot,.card[data-side="L"] .dot,.card[data-side="R"] .dot{left:50%;right:auto;margin:0 0 0 -13px;top:auto}
+ .card[data-side="L"] .dot{bottom:-17px}.card[data-side="R"] .dot{top:-17px}
+ .glyph{font-size:min(150px,19vh)}.glyph.en{font-size:min(120px,15vh)}
+}
+@media (min-width:700px) and (orientation:portrait){
+ .tray{grid-template-columns:repeat(3,minmax(0,1fr))}
+ .item svg{height:72px;width:110px}
+}
 @media (prefers-reduced-motion:reduce){.shake,.doll .layer,.conf,.word{animation:none}.conf{display:none}.card,.tile{transition:none}}
 </style>
 
@@ -302,8 +351,9 @@ function cardHTML(p,side,inner){return `<button class="card" data-id="${p.id}" d
 function newRound(){const M=MODES[cur.kind],pick=pagesOf(cur.kind)[cur.page];paintPager();cur.pairs=pick;cur.done=new Set();cur.sel=null;cur.busy=false;
   $('#colL').innerHTML=shuffle([...pick]).map(p=>cardHTML(p,'L',M.L(p))).join('');
   $('#colR').innerHTML=shuffle([...pick]).map(p=>cardHTML(p,'R',M.R(p))).join('');requestAnimationFrame(()=>drawLines())}
-function dot(card){const r=card.getBoundingClientRect(),pr=play.getBoundingClientRect();return{x:(card.dataset.side==='L'?r.right:r.left)-pr.left,y:r.top+r.height/2-pr.top}}
-function curve(a,b,color,dash){const mx=(a.x+b.x)/2;return `<path d="M${a.x} ${a.y}C${mx} ${a.y} ${mx} ${b.y} ${b.x} ${b.y}" stroke="${color}" stroke-width="7" fill="none" stroke-linecap="round" ${dash?'stroke-dasharray="2 12"':''}/>`}
+const vert=()=>matchMedia('(min-width:700px) and (orientation:landscape)').matches;
+function dot(card){const r=card.getBoundingClientRect(),pr=play.getBoundingClientRect(),L=card.dataset.side==='L';return vert()?{x:r.left+r.width/2-pr.left,y:(L?r.bottom:r.top)-pr.top}:{x:(L?r.right:r.left)-pr.left,y:r.top+r.height/2-pr.top}}
+function curve(a,b,color,dash){const mx=(a.x+b.x)/2,my=(a.y+b.y)/2,c=vert()?`${a.x} ${my} ${b.x} ${my}`:`${mx} ${a.y} ${mx} ${b.y}`;return `<path d="M${a.x} ${a.y}C${c} ${b.x} ${b.y}" stroke="${color}" stroke-width="7" fill="none" stroke-linecap="round" ${dash?'stroke-dasharray="2 12"':''}/>`}
 function drawLines(extra=''){let h='';cur.done.forEach(id=>{const l=play.querySelector(`.card[data-side="L"][data-id="${id}"]`),r=play.querySelector(`.card[data-side="R"][data-id="${id}"]`);if(l&&r)h+=curve(dot(l),dot(r),'var(--grass)')});lines.innerHTML=h+extra}
 function setSel(c){$$('.card.sel').forEach(x=>x.classList.remove('sel'));cur.sel=c;if(c)c.classList.add('sel')}
 function pt(e){const pr=play.getBoundingClientRect();return{x:e.clientX-pr.left,y:e.clientY-pr.top}}
