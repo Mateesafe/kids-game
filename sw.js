@@ -1,6 +1,6 @@
 ﻿// เก็บไฟล์เกมไว้ในเครื่อง เพื่อให้เล่นได้แม้ไม่มีเน็ต
 // เวลาแก้เกม ให้เปลี่ยนเลขเวอร์ชันข้างล่าง เครื่องลูกจะโหลดของใหม่เอง
-const CACHE = 'kids-game-v14';
+const CACHE = 'kids-game-v15';
 const FILES = ['./', './index.html', './manifest.webmanifest', './icon-180.png', './icon-192.png', './icon-512.png'];
 
 self.addEventListener('install', e => {
