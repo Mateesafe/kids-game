@@ -32,7 +32,7 @@ img{-webkit-user-drag:none;user-drag:none;pointer-events:none}
 .sub{margin:-4px 0 0;color:var(--muted);font-size:17px}
 
 /* home */
-.tiles{flex:1;min-height:0;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr 1fr;gap:14px}
+.tiles{flex:1;min-height:0;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:14px}
 .tile{position:relative;overflow:hidden;border:none;border-radius:28px;padding:0;display:flex;flex-direction:column;justify-content:flex-end;
   box-shadow:0 6px 0 rgba(34,49,74,.2);transition:transform .12s;min-height:0;background:var(--paper)}
 .tile:active{transform:translateY(4px);box-shadow:0 2px 0 rgba(34,49,74,.2)}
@@ -44,9 +44,7 @@ img{-webkit-user-drag:none;user-drag:none;pointer-events:none}
 .t-fruit .badge,.t-fruit .lbl{background:var(--grass)}
 .t-dress{background:var(--sun)}
 .t-dress .lbl{background:#E8A80F}
-.t-dress svg,.t-wx svg{position:absolute;inset:6px 0 40px;margin:auto;height:calc(100% - 46px);width:auto}
-.t-wx{background:#9AD4F2;grid-column:span 2}
-.t-wx .lbl{background:#1F8FCB}
+.t-dress svg{position:absolute;inset:6px 0 40px;margin:auto;height:calc(100% - 46px);width:auto}
 .credit-link{border:none;background:none;color:var(--muted);font-size:14px;text-decoration:underline;align-self:center;padding:2px 8px}
 
 /* matching */
@@ -82,18 +80,48 @@ img{-webkit-user-drag:none;user-drag:none;pointer-events:none}
 .doll{position:relative;height:100%;aspect-ratio:200/320;max-width:100%}
 .doll svg{position:absolute;inset:0;width:100%;height:100%}
 .doll .layer{animation:fade .35s}
-/* dress for the weather: sky behind the doll */
+/* dress-up themes: the same backgrounds paint the menu cards and the stage behind the doll */
 .stage{position:relative;border-radius:28px;transition:background .4s}
-.stage.wx-rain{background:linear-gradient(#AFC3D8,#DCE8F3)}
-.stage.wx-sun{background:radial-gradient(circle at 86% 14%,#FFF3B0 0 9%,#FFE07A 9.5% 13%,transparent 13.5%),linear-gradient(#BFE6FF,#FFF4D6)}
-.stage.wx-cold{background:linear-gradient(#CFE3F5,#F4F9FF)}
-.stage.wx-rain::before,.stage.wx-cold::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none}
-.stage.wx-rain::before{background-image:radial-gradient(1.5px 6px at 50% 50%,rgba(44,108,208,.6) 95%,transparent),radial-gradient(1.5px 6px at 50% 50%,rgba(44,108,208,.45) 95%,transparent);background-size:26px 40px,34px 60px;background-position:0 0,13px 20px;animation:rain .6s linear infinite}
-.stage.wx-cold::before{background-image:radial-gradient(circle 3.5px,#fff 90%,transparent),radial-gradient(circle 2.5px,#fff 90%,transparent);background-size:40px 40px,28px 56px;background-position:0 0,14px 10px;animation:snow 5s linear infinite}
+.sc-winter{background:linear-gradient(#CFE3F5,#F4F9FF)}
+.sc-rain{background:linear-gradient(#AFC3D8,#DCE8F3)}
+.sc-summer{background:radial-gradient(circle at 86% 14%,#FFF3B0 0 9%,#FFE07A 9.5% 13%,transparent 13.5%),linear-gradient(#BFE6FF,#FFF4D6)}
+.sc-snow{background:linear-gradient(transparent 82%,#FFFFFF 82%),linear-gradient(#B9D6F2,#E8F2FC)}
+.sc-swim{background:linear-gradient(transparent 62%,#5BC0EB 62%,#2E9BD6),linear-gradient(#BFE9FF,#E6F7FF)}
+.sc-loy{background:radial-gradient(circle at 84% 14%,#FFF6D0 0 7%,transparent 7.5%),linear-gradient(transparent 72%,#24407A 72%),linear-gradient(#1C2650,#3A4C8E)}
+.sc-songkran{background:radial-gradient(circle at 14% 18%,#FFD6E7 0 9%,transparent 9.5%),radial-gradient(circle at 86% 26%,#FFF0B3 0 8%,transparent 8.5%),linear-gradient(#A8E6FF,#E3F8FF)}
+.sc-free{background:radial-gradient(circle,#FFC2D6 3px,transparent 4px) 0 0/22px 22px,linear-gradient(#FFF0F6,#F3E9FF)}
+.sc-word{background:linear-gradient(#FFF6DA,#FFFFFF)}
+.stage.sc-rain::before,.stage.sc-songkran::before,.stage.sc-winter::before,.stage.sc-snow::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none}
+.stage.sc-rain::before,.stage.sc-songkran::before{background-image:radial-gradient(1.5px 6px at 50% 50%,rgba(44,108,208,.6) 95%,transparent),radial-gradient(1.5px 6px at 50% 50%,rgba(44,108,208,.45) 95%,transparent);background-size:26px 40px,34px 60px;background-position:0 0,13px 20px;animation:rain .6s linear infinite}
+.stage.sc-songkran::before{opacity:.55}
+.stage.sc-winter::before,.stage.sc-snow::before{background-image:radial-gradient(circle 3.5px,#fff 90%,transparent),radial-gradient(circle 2.5px,#fff 90%,transparent);background-size:40px 40px,28px 56px;background-position:0 0,14px 10px;animation:snow 5s linear infinite}
 @keyframes rain{to{background-position:0 40px,13px 80px}}
 @keyframes snow{to{background-position:0 40px,14px 66px}}
-.wxIco{width:56px;height:56px;flex:none}.wxIco svg{width:100%;height:100%}
 @media (prefers-reduced-motion:reduce){.stage::before{animation:none!important}}
+.askIco{width:56px;height:56px;flex:none}.askIco svg{width:100%;height:100%}
+.clear{border:none;background:var(--tomato);color:var(--paper);border-radius:999px;padding:8px 14px;font-size:16px;font-weight:700;flex:none;box-shadow:0 4px 0 #C9432B}
+.clear:active{transform:translateY(3px);box-shadow:0 1px 0 #C9432B}
+/* theme menu */
+.who{display:flex;gap:10px;justify-content:center}
+.who button{display:flex;align-items:center;gap:6px;border:3px solid var(--line);background:var(--paper);border-radius:999px;padding:4px 16px 4px 5px;font-size:18px;font-weight:700}
+.who button svg{width:44px;height:44px;border-radius:50%;background:#FFF3D6}
+.who button.on{border-color:var(--berry);background:#EFE9FF;box-shadow:0 4px 0 #B9A6F7}
+.themes{flex:1;min-height:0;display:grid;grid-template-columns:repeat(3,1fr);grid-auto-rows:1fr;gap:10px}
+.theme{position:relative;border:none;border-radius:22px;padding:6px 4px 8px;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:4px;min-height:0;overflow:hidden;box-shadow:0 5px 0 rgba(34,49,74,.18);transition:transform .1s}
+.theme:active{transform:translateY(3px)}
+.theme svg{flex:1;min-height:0;width:84%}
+.theme span{font-size:clamp(14px,4vw,20px);font-weight:700;background:rgba(255,255,255,.9);border-radius:999px;padding:1px 10px;white-space:nowrap;max-width:100%;overflow:hidden;text-overflow:ellipsis;box-sizing:border-box}
+.theme.sc-free{box-shadow:0 5px 0 #F7A8B8,inset 0 0 0 4px #FF8FA3}
+/* freestyle wardrobe: category tabs + a 2-row tray that scrolls sideways */
+.tabs{display:flex;gap:6px}
+.tab{flex:1;min-width:0;border:3px solid var(--line);background:var(--paper);border-radius:16px;padding:3px 2px;display:flex;flex-direction:column;align-items:center;font-size:13px;font-weight:700;line-height:1.1}
+.tab svg{height:26px;width:40px;pointer-events:none}
+.tab.on{border-color:var(--berry);background:#EFE9FF}
+.tray.free{grid-template-columns:none;grid-auto-flow:column;grid-template-rows:repeat(2,auto);grid-auto-columns:calc((100% - 16px)/3.3);overflow-x:auto;overscroll-behavior:contain;scrollbar-width:none}
+.tray.free::-webkit-scrollbar{display:none}
+.tray.free .item{touch-action:pan-x}
+.item.on{border-color:var(--berry);background:#EFE9FF;box-shadow:inset 0 0 0 2px var(--berry)}
+#overBtn2{display:block;margin:12px auto 0;background:var(--berry)}
 @keyframes fade{from{opacity:0;transform:translateY(-6%)}to{opacity:1;transform:none}}
 @keyframes pop{from{transform:translateX(-50%) scale(.4)}to{transform:translateX(-50%) scale(1)}}
 .tray{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding-bottom:4px}
@@ -163,8 +191,13 @@ body{background:radial-gradient(circle,rgba(255,255,255,.6) 3px,transparent 4px)
  .tile{border-radius:34px}
  .tile .badge{min-width:72px;height:72px;font-size:44px;border-radius:22px;top:14px;left:14px}
  .tile span.lbl{font-size:28px;padding:12px 18px}
- .t-dress svg,.t-wx svg{inset:10px 0 56px;height:calc(100% - 66px)}
- .wxIco{width:72px;height:72px}
+ .t-dress svg{inset:10px 0 56px;height:calc(100% - 66px)}
+ .askIco{width:72px;height:72px}
+ .who button{font-size:22px}.who button svg{width:56px;height:56px}
+ .themes{gap:16px}.theme{border-radius:28px}.theme span{font-size:24px}
+ .tray.free{grid-template-columns:none;grid-auto-columns:calc((100% - 60px)/6)}
+ .tab{font-size:17px;border-radius:20px}.tab svg{height:34px;width:52px}
+ .clear{font-size:20px;padding:10px 20px}
  .credit-link{font-size:17px}
  .col{width:40%;gap:16px}
  .card{border-radius:28px;border-width:5px}
@@ -186,10 +219,9 @@ body{background:radial-gradient(circle,rgba(255,255,255,.6) 3px,transparent 4px)
  .over button{font-size:28px;padding:16px 46px}
  .credits .box{max-width:720px}.credits ol{font-size:14px}
 }
-/* iPad held sideways: 3 game tiles on top, 2 wider ones below */
+/* iPad held sideways: the 4 game tiles sit in one row */
 @media (min-width:700px) and (orientation:landscape){
- .tiles{grid-template-columns:repeat(6,1fr);grid-template-rows:1fr 1fr}
- .tile{grid-column:span 2}.t-dress,.t-wx{grid-column:span 3}
+ .tiles{grid-template-columns:repeat(4,1fr);grid-template-rows:1fr}
  .play{flex-direction:column;gap:12%}
  .col{width:100%;flex-direction:row;flex:1;gap:18px}
  .card .dot,.card[data-side="L"] .dot,.card[data-side="R"] .dot{left:50%;right:auto;margin:0 0 0 -13px;top:auto}
@@ -211,8 +243,7 @@ body{background:radial-gradient(circle,rgba(255,255,255,.6) 3px,transparent 4px)
       <button class="tile t-thai" data-go="thai"><img class="pic" data-p="th_ก" alt=""><div class="badge">ก</div><span class="lbl">ก ไก่ จับคู่ภาพ</span></button>
       <button class="tile t-eng" data-go="eng"><img class="pic" data-p="en_L" alt=""><div class="badge">Aa</div><span class="lbl">ABC จับคู่ภาพ</span></button>
       <button class="tile t-fruit" data-go="fruit"><img class="pic" data-p="watermelon_c" alt=""><div class="badge">🍉</div><span class="lbl">ผลไม้ ข้างนอก-ข้างใน</span></button>
-      <button class="tile t-dress" data-go="dress"><span id="dressIcon"></span><span class="lbl">แต่งตัวให้น้อง</span></button>
-      <button class="tile t-wx" data-go="wx"><span id="wxIcon"></span><span class="lbl">แต่งตัวตามอากาศ</span></button>
+      <button class="tile t-dress" data-go="dress"><span id="dressIcon"></span><span class="lbl">แต่งตัว</span></button>
     </div>
     <button class="credit-link" id="openCredits">ที่มาของภาพและเสียง</button>
   </section>
@@ -228,17 +259,24 @@ body{background:radial-gradient(circle,rgba(255,255,255,.6) 3px,transparent 4px)
     <div class="pager"><button class="navBtn prev" id="pgPrev" aria-label="หน้าก่อน"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M19 12L31 24L19 36" fill="none" stroke="#fff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div class="pgInfo"><b id="pgLabel">ก – ง</b><div class="pgDots" id="pgDots"></div></div><button class="navBtn next" id="pgNext" aria-label="หน้าถัดไป"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M19 12L31 24L19 36" fill="none" stroke="#fff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
   </section>
 
+  <section class="screen" id="dressMenu" hidden>
+    <div class="top"><button class="homeBtn" data-home aria-label="กลับหน้าแรก"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="31" y="7" width="7" height="11" rx="2.5" fill="#FF8FA3"/><path d="M10 22V38a4 4 0 0 0 4 4h20a4 4 0 0 0 4-4V22L24 10Z" fill="#FFE08A"/><path d="M5 24L24 7L43 24" fill="none" stroke="#FF6B4A" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><rect x="20" y="29" width="8" height="13" rx="4" fill="#7B5CF0"/><path d="M16 25.5c-1.6-1.6-4 .2-2.6 2l2.6 2.6 2.6-2.6c1.4-1.8-1-3.6-2.6-2z" fill="#FF6B4A"/><circle cx="25.5" cy="36" r="1.2" fill="#FFE08A"/></svg></button><h2>เลือกชุดแต่งตัว</h2><button class="musicBtn" aria-label="ปิดเพลง"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M18 35V13l20-5v22" fill="none" stroke="#7B5CF0" stroke-width="4" stroke-linejoin="round"/><path d="M18 13l20-5" stroke="#7B5CF0" stroke-width="7"/><ellipse cx="13" cy="36" rx="7" ry="5.5" fill="#7B5CF0"/><ellipse cx="33" cy="31" rx="7" ry="5.5" fill="#FF6B4A"/><path class="slash" d="M7 7L41 41" stroke="#FF6B4A" stroke-width="5" stroke-linecap="round"/></svg></button><div class="stars">⭐ <b>0</b></div></div>
+    <div class="who"><button data-who="girl"></button><button data-who="boy"></button></div>
+    <div class="themes" id="themes"></div>
+  </section>
+
   <section class="screen" id="dress" hidden>
-    <div class="top"><button class="homeBtn" data-home aria-label="กลับหน้าแรก"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="31" y="7" width="7" height="11" rx="2.5" fill="#FF8FA3"/><path d="M10 22V38a4 4 0 0 0 4 4h20a4 4 0 0 0 4-4V22L24 10Z" fill="#FFE08A"/><path d="M5 24L24 7L43 24" fill="none" stroke="#FF6B4A" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><rect x="20" y="29" width="8" height="13" rx="4" fill="#7B5CF0"/><path d="M16 25.5c-1.6-1.6-4 .2-2.6 2l2.6 2.6 2.6-2.6c1.4-1.8-1-3.6-2.6-2z" fill="#FF6B4A"/><circle cx="25.5" cy="36" r="1.2" fill="#FFE08A"/></svg></button><h2>แต่งตัวให้น้อง</h2><button class="musicBtn" aria-label="ปิดเพลง"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M18 35V13l20-5v22" fill="none" stroke="#7B5CF0" stroke-width="4" stroke-linejoin="round"/><path d="M18 13l20-5" stroke="#7B5CF0" stroke-width="7"/><ellipse cx="13" cy="36" rx="7" ry="5.5" fill="#7B5CF0"/><ellipse cx="33" cy="31" rx="7" ry="5.5" fill="#FF6B4A"/><path class="slash" d="M7 7L41 41" stroke="#FF6B4A" stroke-width="5" stroke-linecap="round"/></svg></button><div class="stars">⭐ <b>0</b></div></div>
+    <div class="top"><button class="homeBtn" data-menu aria-label="กลับไปเลือกชุด"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M29 11L16 24L29 37" fill="none" stroke="#FF6B4A" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg></button><h2 id="dressTitle">แต่งตัว</h2><button class="musicBtn" aria-label="ปิดเพลง"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M18 35V13l20-5v22" fill="none" stroke="#7B5CF0" stroke-width="4" stroke-linejoin="round"/><path d="M18 13l20-5" stroke="#7B5CF0" stroke-width="7"/><ellipse cx="13" cy="36" rx="7" ry="5.5" fill="#7B5CF0"/><ellipse cx="33" cy="31" rx="7" ry="5.5" fill="#FF6B4A"/><path class="slash" d="M7 7L41 41" stroke="#FF6B4A" stroke-width="5" stroke-linecap="round"/></svg></button><div class="stars">⭐ <b>0</b></div></div>
     <div class="ask">
-      <span class="wxIco" id="wxIco" hidden></span><div class="words"><div class="lead" id="askLead">หยิบอันนี้ให้น้องหน่อย</div><div class="w"><span id="askTh">หมวก</span><small id="askEn">hat</small></div></div>
-      <button class="say" id="sayAgain" aria-label="ฟังอีกครั้ง">🔊</button>
+      <span class="askIco" id="askIco" hidden></span><div class="words"><div class="lead" id="askLead">หยิบอันนี้ให้น้องหน่อย</div><div class="w"><span id="askTh">หมวก</span><small id="askEn">hat</small></div></div>
+      <button class="say" id="sayAgain" aria-label="ฟังอีกครั้ง">🔊</button><button class="clear" id="clearAll" hidden>ถอดหมด</button>
     </div>
     <div class="stage" id="stage"><div class="doll" id="doll"></div></div>
+    <div class="tabs" id="tabs" hidden></div>
     <div class="tray" id="tray"></div>
   </section>
 </div>
-<div class="over" id="over" hidden><div class="box"><b id="overT">เก่งมาก!</b><p id="overP">ถูกครบทุกข้อเลย</p><button id="overBtn">เล่นต่อ</button></div></div>
+<div class="over" id="over" hidden><div class="box"><b id="overT">เก่งมาก!</b><p id="overP">ถูกครบทุกข้อเลย</p><button id="overBtn">เล่นต่อ</button><button id="overBtn2" hidden></button></div></div>
 <div class="over credits" id="credits" hidden><div class="box"><h3>ที่มาของภาพและเสียง</h3><p style="margin:0 0 8px;font-size:13px">ภาพและเสียงจาก Wikimedia Commons ใช้ตามสัญญาอนุญาตที่ระบุ</p><ol id="creditList"></ol><button id="closeCredits">ปิด</button></div></div>
 
 <script>
@@ -413,7 +451,7 @@ const MODES={
 /* ---------- navigation ---------- */
 function show(id){$$('.screen').forEach(s=>s.hidden=s.id!==id);if(id==='home')hush()}
 $$('[data-home]').forEach(b=>b.onclick=()=>{clearTimeout(dress.timer);$('#over').hidden=true;show('home')});
-$$('[data-go]').forEach(b=>b.onclick=()=>{audio();warm();const g=b.dataset.go;g==='dress'?startDress():g==='wx'?startWeather():startMatch(g)});
+$$('[data-go]').forEach(b=>b.onclick=()=>{audio();warm();const g=b.dataset.go;g==='dress'?openDressMenu():startMatch(g)});
 
 /* ---------- matching game ---------- */
 const play=$('#play'),lines=$('#lines');
@@ -457,7 +495,7 @@ function success(p){hush();cheer();later(()=>voiceOf(p),1500);addStar()}
 function replay(p){hush();voiceOf(p)}
 addEventListener('resize',()=>drawLines());
 
-/* ---------- dress up (illustrated clothes in the doll's 200x320 space) ---------- */
+/* ---------- dress up: one doll, many outfits (everything drawn in the doll's 200x320 space) ---------- */
 const CLOTHES=[
  {id:'pants',th:'กางเกง',en:'pants',vb:'58 178 84 110',svg:`<path d="M66 184H134L130 284H105L100 212L95 284H70Z" fill="#2E4A7A"/><path d="M66 184H134V198H66Z" fill="#253D66"/><circle cx="100" cy="191" r="3" fill="#FFC53A"/><path d="M84 200v20M116 200v20" stroke="#253D66" stroke-width="2"/>`},
  {id:'shirt',th:'เสื้อ',en:'shirt',vb:'38 90 124 114',svg:`<path d="M66 112Q70 100 88 97H112Q130 100 134 112L158 140L141 154L134 140V200H66V140L59 154L42 140Z" fill="#FF6B4A"/><path d="M88 97Q100 112 112 97" fill="#E8553A"/><path d="M66 160H134M66 176H134" stroke="#FFFFFF" stroke-width="6" opacity=".55"/><circle cx="100" cy="128" r="10" fill="#FFC53A"/><path d="M100 121l2.4 5 5.4.6-4 3.7 1 5.3-4.8-2.7-4.8 2.7 1-5.3-4-3.7 5.4-.6Z" fill="#FFFFFF"/>`},
@@ -465,7 +503,52 @@ const CLOTHES=[
  {id:'scarf',th:'ผ้าพันคอ',en:'scarf',vb:'74 84 52 64',svg:`<rect x="78" y="88" width="44" height="16" rx="8" fill="#7B5CF0"/><path d="M104 100L118 140L106 144L96 102Z" fill="#6A4BE0"/><path d="M84 89v14M92 89v14M100 89v14M108 89v14M116 89v14" stroke="#FFC53A" stroke-width="3"/><path d="M108 128l10-4M111 136l9-3" stroke="#FFC53A" stroke-width="3"/>`},
  {id:'glasses',th:'แว่นตา',en:'glasses',vb:'64 44 72 32',svg:`<circle cx="86" cy="60" r="12" fill="#BFE3FF" fill-opacity=".45" stroke="#22314A" stroke-width="4"/><circle cx="114" cy="60" r="12" fill="#BFE3FF" fill-opacity=".45" stroke="#22314A" stroke-width="4"/><path d="M98 59Q100 55 102 59M74 58L64 54M126 58L136 54" stroke="#22314A" stroke-width="4" fill="none" stroke-linecap="round"/>`},
  {id:'hat',th:'หมวก',en:'hat',vb:'56 4 112 52',svg:`<path d="M60 44Q60 10 100 10Q140 10 140 44Z" fill="#3C86F0"/><path d="M128 40Q160 38 164 48Q150 52 124 50Z" fill="#2C6CD0"/><path d="M60 44H140V50H60Z" fill="#2C6CD0"/><circle cx="100" cy="11" r="5" fill="#FFC53A"/><path d="M100 12V44" stroke="#2C6CD0" stroke-width="2"/>`}];
-const BODY=`<svg viewBox="0 0 200 320" aria-hidden="true">
+// slot = the part of the doll an item covers (one item per slot, full outfits take two); z = drawing order on the doll
+const META={pants:['bottom',20],shirt:['top',30],shoes:['feet',10],scarf:['neck',40,'winter'],glasses:['face',60],hat:['head',70]};
+CLOTHES.forEach(c=>{const m=META[c.id];c.slot=m[0];c.z=m[1];if(m[2])c.t=m[2]});
+const FULL=['top','bottom'];
+const COAT='M66 110Q70 100 88 97H112Q130 100 134 110L159 104L175 168L152 174L134 150V';
+const I=(id,t,th,en,slot,z,vb,svg)=>({id,t,th,en,slot,z,vb,svg});
+const ITEMS=[...CLOTHES,
+ // rainy
+ I('raincoat','rain','เสื้อกันฝน','raincoat','top',30,'22 94 156 140',`<path d="${COAT}226Q100 232 66 226V150L48 174L25 168L41 104Z" fill="#FFD23F"/><path d="M88 97Q100 116 112 97" fill="#E8B400"/><path d="M100 110V228M26 162L49 168M174 162L151 168" stroke="#E8B400" stroke-width="4"/><circle cx="92" cy="132" r="3.5" fill="#3C86F0"/><circle cx="92" cy="158" r="3.5" fill="#3C86F0"/><circle cx="92" cy="184" r="3.5" fill="#3C86F0"/><path d="M72 192H88V206H72ZM112 192H128V206H112Z" fill="#F2C200"/>`),
+ I('umbrella','rain','ร่ม','umbrella','hand',80,'104 0 96 196',`<path d="M153 44L165 180Q167 192 158 192Q152 191 153 184" stroke="#22314A" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M108 44Q110 6 153 6Q196 6 198 44Q187 36 175.5 44Q164 36 153 44Q142 36 130.5 44Q119 36 108 44Z" fill="#3C86F0"/><path d="M153 6Q138 20 130.5 44M153 6Q168 20 175.5 44" stroke="#2C6CD0" stroke-width="3" fill="none"/><path d="M153 6V1" stroke="#22314A" stroke-width="3" stroke-linecap="round"/>`),
+ I('boots','rain','รองเท้าบูท','boots','feet',10,'54 240 92 64',`<path d="M70 246H98V300H64Q58 300 58 294Q58 286 70 284Z" fill="#FF6B4A"/><path d="M130 246H102V300H136Q142 300 142 294Q142 286 130 284Z" fill="#FF6B4A"/><path d="M68 246H100V256H68ZM100 246H132V256H100Z" fill="#E8553A"/><rect x="58" y="295" width="40" height="6" rx="3" fill="#B53A24"/><rect x="102" y="295" width="40" height="6" rx="3" fill="#B53A24"/>`),
+ // winter
+ I('jacket','winter','เสื้อกันหนาว','jacket','top',30,'22 94 156 124',`<path d="${COAT}212Q100 218 66 212V150L48 174L25 168L41 104Z" fill="#E8553A"/><path d="M66 140H134M66 168H134M66 194H134" stroke="#C9432B" stroke-width="3"/><path d="M100 104V214" stroke="#FFC53A" stroke-width="3"/><path d="M26 162L49 168M174 162L151 168" stroke="#FFFFFF" stroke-width="6"/>`),
+ I('beanie','winter','หมวกไหมพรม','beanie','head',70,'54 0 92 56',`<path d="M62 46Q60 10 100 10Q140 10 138 46Z" fill="#21A05C"/><path d="M68 30Q100 18 132 30" stroke="#FFFFFF" stroke-width="4" fill="none" opacity=".6"/><rect x="58" y="38" width="84" height="14" rx="7" fill="#178A4C"/><path d="M70 40v10M82 40v10M94 40v10M106 40v10M118 40v10M130 40v10" stroke="#21A05C" stroke-width="3"/><circle cx="100" cy="11" r="8" fill="#FFFFFF" stroke="#C3DAEE" stroke-width="2"/>`),
+ // summer
+ I('sunhat','summer','หมวกกันแดด','sun hat','head',70,'36 4 128 52',`<ellipse cx="100" cy="40" rx="62" ry="12" fill="#E9B85C"/><path d="M70 40Q70 8 100 8Q130 8 130 40Z" fill="#F7D58A"/><path d="M71 30H129V38H71Z" fill="#FF8FA3"/><circle cx="122" cy="34" r="5" fill="#FFC53A"/>`),
+ I('shades','summer','แว่นกันแดด','sunglasses','face',60,'60 44 80 32',`<path d="M72 52H98V62Q98 70 88 70H80Q72 70 72 62Z" fill="#22314A"/><path d="M102 52H128V62Q128 70 120 70H112Q102 70 102 62Z" fill="#22314A"/><path d="M98 56Q100 53 102 56M72 54L63 50M128 54L137 50" stroke="#22314A" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M77 57h6M107 57h6" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" opacity=".7"/>`),
+ I('shorts','summer','กางเกงขาสั้น','shorts','bottom',20,'60 178 80 58',`<path d="M66 184H134L132 230H104L100 208L96 230H68Z" fill="#3CB4C8"/><path d="M66 184H134V194H66Z" fill="#2A97AA"/><circle cx="84" cy="212" r="4" fill="#FFC53A"/><circle cx="118" cy="214" r="4" fill="#FFC53A"/>`),
+ // snow
+ I('snowsuit','snow','ชุดกันหิมะ','snowsuit',FULL,30,'22 94 156 190',`<path d="${COAT}186L132 280H104L100 216L96 280H68L66 186V150L48 174L25 168L41 104Z" fill="#6BB8F0"/><path d="M66 186H134V196H66Z" fill="#3C86F0"/><path d="M100 104V186" stroke="#FFFFFF" stroke-width="3"/><path d="M66 140H134M68 232H96M104 232H132" stroke="#4FA3E3" stroke-width="3"/><path d="M68 272H96M104 272H132M26 162L49 168M174 162L151 168" stroke="#FFFFFF" stroke-width="7"/>`),
+ I('mittens','snow','ถุงมือ','mittens','gloves',50,'10 160 40 48',`<g fill="#FF8FA3"><path d="M24 178Q24 168 34 168Q44 168 44 178V196Q44 204 34 204Q24 204 24 196Z"/><path d="M25 184Q14 182 15 191Q17 199 26 196Z"/><path d="M156 178Q156 168 166 168Q176 168 176 178V196Q176 204 166 204Q156 204 156 196Z"/><path d="M175 184Q186 182 185 191Q183 199 174 196Z"/></g><rect x="22" y="164" width="24" height="8" rx="4" fill="#FFFFFF"/><rect x="154" y="164" width="24" height="8" rx="4" fill="#FFFFFF"/><circle cx="34" cy="186" r="3" fill="#FFFFFF"/><circle cx="166" cy="186" r="3" fill="#FFFFFF"/>`),
+ I('earmuffs','snow','ที่ปิดหู','earmuffs','ears',65,'44 6 112 70',`<path d="M60 56Q58 12 100 12Q142 12 140 56" stroke="#7B5CF0" stroke-width="6" fill="none" stroke-linecap="round"/><circle cx="61" cy="60" r="13" fill="#FFB4D0" stroke="#FFFFFF" stroke-width="3"/><circle cx="139" cy="60" r="13" fill="#FFB4D0" stroke="#FFFFFF" stroke-width="3"/>`),
+ // swimming
+ I('swimsuit','swim','ชุดว่ายน้ำ','swimsuit',FULL,30,'60 96 80 116',`<path d="M66 124Q66 100 86 100Q100 112 114 100Q134 100 134 124V186Q120 190 114 208H86Q80 190 66 186Z" fill="#FF5C8A"/><g fill="#FFFFFF" opacity=".8"><circle cx="86" cy="134" r="4"/><circle cx="112" cy="128" r="4"/><circle cx="100" cy="156" r="4"/><circle cx="82" cy="172" r="4"/><circle cx="118" cy="174" r="4"/></g>`),
+ I('goggles','swim','แว่นว่ายน้ำ','goggles','face',60,'58 44 84 30',`<path d="M62 58H74M126 58H138" stroke="#1F8FCB" stroke-width="5" stroke-linecap="round"/><rect x="73" y="49" width="24" height="19" rx="9" fill="#9BE7F5" stroke="#1F8FCB" stroke-width="4"/><rect x="103" y="49" width="24" height="19" rx="9" fill="#9BE7F5" stroke="#1F8FCB" stroke-width="4"/><path d="M97 57H103" stroke="#1F8FCB" stroke-width="4"/><path d="M78 54h5M108 54h5" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round"/>`),
+ I('swimring','swim','ห่วงยาง','swim ring','waist',45,'40 148 120 58',`<path d="M54 160Q52 194 100 194Q148 194 146 160" stroke="#FF6B4A" stroke-width="16" fill="none" stroke-linecap="round"/><path d="M54 160Q52 194 100 194Q148 194 146 160" stroke="#FFFFFF" stroke-width="16" fill="none" stroke-dasharray="14 20"/><path d="M62 176Q72 188 90 190" stroke="#FFFFFF" stroke-width="3" fill="none" opacity=".6" stroke-linecap="round"/>`),
+ // Loy Krathong
+ I('sabai','loy','สไบ','Thai sash','top',30,'56 94 88 108',`<path d="M66 122Q100 132 134 122V196H66Z" fill="#F2C94C"/><path d="M66 142H134M66 162H134M66 182H134" stroke="#D9A520" stroke-width="2" stroke-dasharray="4 4"/><path d="M60 104Q72 96 86 100L138 178L134 198H114L66 130Z" fill="#C9302C"/><path d="M70 110L128 186" stroke="#FFD86B" stroke-width="3" stroke-dasharray="2 5" stroke-linecap="round"/>`),
+ I('chongkraben','loy','โจงกระเบน','Thai pants','bottom',20,'60 178 80 74',`<path d="M64 184H136L134 246Q118 252 104 246L100 222L96 246Q82 252 66 246Z" fill="#7E3FA8"/><path d="M64 184H136V194H64Z" fill="#E8B84A"/><path d="M66 240Q82 246 96 240M104 240Q118 246 134 240" stroke="#E8B84A" stroke-width="4" fill="none"/><path d="M100 194V214" stroke="#5E2A82" stroke-width="3"/>`),
+ I('krathong','loy','กระทง','krathong','hand',80,'138 152 54 62',`<path d="M144 194H188L180 210H152Z" fill="#1F8A4C"/><path d="M144 194L149 182L155 194L161 182L166 194L172 182L178 194L183 182L188 194Z" fill="#5CC46A"/><rect x="157" y="168" width="2.5" height="14" fill="#C9A26B"/><circle cx="166" cy="184" r="8" fill="#FF8FA3"/><circle cx="166" cy="184" r="3.5" fill="#FFC53A"/><rect x="171" y="166" width="4" height="14" rx="1.5" fill="#FFF3D6"/><ellipse cx="173" cy="162" rx="3" ry="5" fill="#FFB000"/>`),
+ // Songkran
+ I('flowershirt','songkran','เสื้อลายดอก','flower shirt','top',30,'38 92 124 112',`<path d="M66 112Q70 100 88 97H112Q130 100 134 112L158 140L141 154L134 140V200H66V140L59 154L42 140Z" fill="#26B3C9"/><path d="M88 97L100 120L112 97" fill="#1B8FA3"/><path d="M100 120V200" stroke="#1B8FA3" stroke-width="2"/><g fill="#FF8FA3"><circle cx="80" cy="130" r="6"/><circle cx="120" cy="150" r="6"/><circle cx="86" cy="178" r="6"/><circle cx="52" cy="142" r="4"/><circle cx="148" cy="140" r="4"/></g><g fill="#FFE066"><circle cx="80" cy="130" r="2.5"/><circle cx="120" cy="150" r="2.5"/><circle cx="86" cy="178" r="2.5"/><circle cx="114" cy="122" r="5"/><circle cx="118" cy="186" r="5"/></g>`),
+ I('watergun','songkran','ปืนฉีดน้ำ','water gun','hand',80,'92 146 102 52',`<circle cx="102" cy="171" r="2.5" fill="#5BD1E8"/><circle cx="110" cy="174" r="3" fill="#5BD1E8"/><circle cx="95" cy="166" r="2" fill="#5BD1E8"/><rect x="122" y="168" width="14" height="8" rx="3" fill="#FFC53A"/><rect x="132" y="164" width="54" height="15" rx="7" fill="#FF8C1A"/><path d="M158 178H172L169 196H160Z" fill="#E86F00"/><circle cx="176" cy="158" r="9" fill="#3C86F0"/><circle cx="173" cy="155" r="3" fill="#BFE3FF"/>`),
+ I('bowl','songkran','ขันน้ำ','water bowl','lhand',80,'8 172 52 38',`<path d="M12 180H56Q54 204 34 206Q14 204 12 180Z" fill="#C9D3DE"/><path d="M18 192H50" stroke="#A9B6C4" stroke-width="2"/><ellipse cx="34" cy="180" rx="22" ry="5" fill="#E6ECF2"/><ellipse cx="34" cy="180" rx="17" ry="3" fill="#5BD1E8"/>`),
+ // extra pieces for freestyle only
+ I('dress',null,'ชุดเดรส','dress',FULL,30,'44 96 112 158',`<path d="M66 124Q66 100 86 100Q100 112 114 100Q134 100 134 124V160L152 240Q100 252 48 240L66 160Z" fill="#B892FF"/><path d="M66 156H134V166H66Z" fill="#7B5CF0"/><circle cx="100" cy="161" r="7" fill="#FF8FA3"/><path d="M48 240Q100 252 152 240" stroke="#FFFFFF" stroke-width="5" fill="none" stroke-dasharray="7 5"/><g fill="#FFFFFF" opacity=".7"><circle cx="86" cy="130" r="3"/><circle cx="114" cy="130" r="3"/><circle cx="80" cy="200" r="3"/><circle cx="100" cy="214" r="3"/><circle cx="120" cy="198" r="3"/></g>`),
+ I('skirt',null,'กระโปรง','skirt','bottom',20,'48 178 104 72',`<path d="M68 184H132L148 238Q100 248 52 238Z" fill="#FF8FA3"/><path d="M68 184H132V194H68Z" fill="#FF5C8A"/><path d="M52 238Q100 248 148 238" stroke="#FFFFFF" stroke-width="4" fill="none" stroke-dasharray="6 6"/><g fill="#FFFFFF" opacity=".8"><circle cx="84" cy="212" r="3.5"/><circle cx="104" cy="222" r="3.5"/><circle cx="122" cy="208" r="3.5"/><circle cx="72" cy="228" r="3.5"/><circle cx="130" cy="230" r="3.5"/></g>`),
+ I('crown',null,'มงกุฎ','crown','head',70,'62 -2 76 48',`<path d="M70 36L73 8L87 24L100 3L113 24L127 8L130 36Z" fill="#FFC53A" stroke="#E8A80F" stroke-width="2" stroke-linejoin="round"/><rect x="69" y="32" width="62" height="10" rx="3" fill="#E8A80F"/><circle cx="100" cy="37" r="4" fill="#FF5C8A"/><circle cx="84" cy="37" r="3" fill="#3C86F0"/><circle cx="116" cy="37" r="3" fill="#21A05C"/><circle cx="73" cy="8" r="3" fill="#FF5C8A"/><circle cx="100" cy="3" r="3" fill="#FF5C8A"/><circle cx="127" cy="8" r="3" fill="#FF5C8A"/>`),
+ I('bow',null,'โบว์','bow','hair',68,'98 10 56 40',`<path d="M126 30L108 18Q102 30 108 42Z" fill="#FF5C8A"/><path d="M126 30L144 18Q150 30 144 42Z" fill="#FF5C8A"/><circle cx="126" cy="30" r="6" fill="#E8336A"/>`),
+ I('necklace',null,'สร้อยคอ','necklace','neck',40,'78 94 44 40',`<g fill="#FFFFFF" stroke="#C3DAEE" stroke-width="1"><circle cx="85" cy="102" r="3.5"/><circle cx="88" cy="109" r="3.5"/><circle cx="93" cy="114" r="3.5"/><circle cx="100" cy="116" r="3.5"/><circle cx="107" cy="114" r="3.5"/><circle cx="112" cy="109" r="3.5"/><circle cx="115" cy="102" r="3.5"/></g><path d="M100 119c-4-4-9 0-5 4l5 5 5-5c4-4-1-8-5-4z" fill="#FF5C8A"/>`)];
+const item=id=>ITEMS.find(c=>c.id===id);
+const slotsOf=c=>[].concat(c.slot);
+const catOf=c=>{const s=slotsOf(c);return s.includes('top')?'top':s.some(x=>['bottom','feet'].includes(x))?'bottom':s.some(x=>['head','face','ears','hair'].includes(x))?'head':'other'};
+
+// the doll: girl (long hair) or boy (short hair)
+const body=g=>`<svg viewBox="0 0 200 320" aria-hidden="true">${g==='girl'?'<path d="M60 62Q52 16 100 16Q148 16 140 62L148 122Q136 130 124 120L122 84H78L76 120Q64 130 52 122Z" fill="var(--hair)"/>':''}
  <rect x="76" y="184" width="21" height="104" rx="10" fill="var(--skin)"/><rect x="103" y="184" width="21" height="104" rx="10" fill="var(--skin)"/>
  <ellipse cx="82" cy="294" rx="15" ry="8" fill="var(--skin2)"/><ellipse cx="118" cy="294" rx="15" ry="8" fill="var(--skin2)"/>
  <rect x="44" y="106" width="18" height="80" rx="9" fill="var(--skin)" transform="rotate(14 53 106)"/><rect x="138" y="106" width="18" height="80" rx="9" fill="var(--skin)" transform="rotate(-14 147 106)"/>
@@ -473,78 +556,111 @@ const BODY=`<svg viewBox="0 0 200 320" aria-hidden="true">
  <rect x="90" y="86" width="20" height="20" rx="6" fill="var(--skin)"/>
  <circle cx="62" cy="60" r="8" fill="var(--skin2)"/><circle cx="138" cy="60" r="8" fill="var(--skin2)"/>
  <circle cx="100" cy="58" r="38" fill="var(--skin)"/>
- <path d="M62 56C60 22 140 22 138 56C128 40 112 35 100 40C88 35 72 40 62 56Z" fill="var(--hair)"/>
+ ${g==='girl'?'<path d="M62 60C56 16 144 16 138 60C136 46 128 38 118 38C114 48 104 50 96 44C88 48 74 46 70 40C64 46 62 52 62 60Z" fill="var(--hair)"/><path d="M81 56l-4-3M119 56l4-3" stroke="#22314A" stroke-width="2.5" stroke-linecap="round"/>':'<path d="M62 56C60 22 140 22 138 56C128 40 112 35 100 40C88 35 72 40 62 56Z" fill="var(--hair)"/>'}
  <circle cx="86" cy="60" r="5" fill="#22314A"/><circle cx="114" cy="60" r="5" fill="#22314A"/>
  <circle cx="78" cy="73" r="6" fill="#F59A9A" opacity=".6"/><circle cx="122" cy="73" r="6" fill="#F59A9A" opacity=".6"/>
  <path d="M89 75Q100 85 111 75" stroke="#22314A" stroke-width="3.5" fill="none" stroke-linecap="round"/></svg>`;
 const icon=c=>`<svg viewBox="${c.vb}" aria-hidden="true">${c.svg}</svg>`;
-$('#dressIcon').innerHTML=BODY.replace('<svg ','<svg ').replace('</svg>',CLOTHES.filter(c=>c.id!=='glasses').map(c=>c.svg).join('')+'</svg>');
-const dress={worn:new Set(),target:null,timer:null,mode:'word',wx:null};
-function startDress(){clearTimeout(dress.timer);dress.mode='word';dress.worn=new Set();wxScene(null);show('dress');renderDoll();renderTray(CLOTHES);nextPrompt()}
-function renderDoll(last){$('#doll').innerHTML=BODY+curList().filter(c=>dress.worn.has(c.id)).map(c=>`<svg viewBox="0 0 200 320" class="${c.id===last?'layer':''}" data-id="${c.id}" aria-label="${c.th}">${c.svg}</svg>`).join('')}
-function renderTray(list){$('#tray').innerHTML=shuffle([...list]).map(c=>`<button class="item${dress.worn.has(c.id)?' used':''}" data-id="${c.id}">${icon(c)}<span class="n">${c.th}<i>${c.en}</i></span></button>`).join('')}
-function nextPrompt(){const left=CLOTHES.filter(c=>!dress.worn.has(c.id));
-  if(!left.length){dress.timer=setTimeout(()=>celebrate('แต่งตัวเสร็จแล้ว!','น้องพร้อมไปเที่ยวแล้ว','ถอดแล้วเล่นใหม่',startDress),600);return}
+const byZ=(a,b)=>a.z-b.z;
+const dressed=(g,ids)=>body(g).replace('</svg>',ids.map(item).sort(byZ).map(c=>c.svg).join('')+'</svg>');
+
+const THEMES=[
+ {id:'winter',name:'หน้าหนาว',ask:'อากาศหนาว',en:'cold',when:'หน้าหนาว',say:['วันนี้อากาศหนาว ใส่อะไรดีนะ',"It's a cold day"],done:'อุ่นสบาย พร้อมออกไปเที่ยวแล้ว',need:['jacket','scarf','beanie'],dis:['shades','shorts','sunhat','swimsuit','goggles'],key:'beanie'},
+ {id:'rain',name:'หน้าฝน',ask:'ฝนตก',en:'rainy',when:'ฝนตก',say:['วันนี้ฝนตก ใส่อะไรดีนะ',"It's a rainy day"],done:'พร้อมออกไปเล่นฝนแล้ว',need:['raincoat','umbrella','boots'],dis:['shades','sunhat','scarf','beanie','swimring'],key:'umbrella'},
+ {id:'summer',name:'หน้าร้อน',ask:'แดดร้อน',en:'sunny',when:'แดดร้อน',say:['วันนี้แดดร้อน ใส่อะไรดีนะ',"It's a sunny day"],done:'พร้อมไปเที่ยวทะเลแล้ว',need:['sunhat','shades','shorts'],dis:['jacket','scarf','beanie','boots','raincoat','mittens'],key:'sunhat'},
+ {id:'snow',name:'เล่นหิมะ',ask:'ไปเล่นหิมะ',en:'snow',when:'เล่นหิมะ',say:['วันนี้จะไปเล่นหิมะ ใส่อะไรดีนะ',"Let's play in the snow"],done:'พร้อมไปปั้นตุ๊กตาหิมะแล้ว',need:['snowsuit','mittens','earmuffs'],dis:['shorts','swimsuit','shades','sunhat','flowershirt'],key:'earmuffs'},
+ {id:'swim',name:'ไปว่ายน้ำ',ask:'ไปว่ายน้ำ',en:'swimming',when:'ไปว่ายน้ำ',say:['วันนี้จะไปว่ายน้ำ ใส่อะไรดีนะ',"Let's go swimming"],done:'พร้อมกระโดดลงน้ำแล้ว',need:['swimsuit','goggles','swimring'],dis:['jacket','boots','beanie','mittens','raincoat'],key:'swimring'},
+ {id:'loy',name:'ลอยกระทง',ask:'ลอยกระทง',en:'Loy Krathong',when:'วันลอยกระทง',say:['วันนี้วันลอยกระทง แต่งชุดไทยไปลอยกระทงกันนะ',"It's Loy Krathong day"],done:'สวยงามมาก พร้อมไปลอยกระทงแล้ว',need:['sabai','chongkraben','krathong'],dis:['swimsuit','goggles','raincoat','mittens','watergun'],key:'krathong'},
+ {id:'songkran',name:'สงกรานต์',ask:'สงกรานต์',en:'Songkran',when:'วันสงกรานต์',say:['วันนี้วันสงกรานต์ ไปเล่นน้ำกันนะ',"It's Songkran day"],done:'พร้อมไปเล่นน้ำสงกรานต์แล้ว',need:['flowershirt','watergun','bowl'],dis:['jacket','mittens','beanie','krathong','snowsuit'],key:'watergun'},
+ {id:'free',name:'ฟรีสไตล์',key:'crown'},
+ {id:'word',name:'หยิบตามคำบอก',key:'shirt'}];
+const theme=id=>THEMES.find(t=>t.id===id);
+const CATS=[['head','หมวก แว่น','crown'],['top','เสื้อ ชุด','dress'],['bottom','กางเกง รองเท้า','skirt'],['other','ของใช้','umbrella']];
+
+const dress={worn:[],target:null,timer:null,mode:'word',theme:null,cat:'head',who:store.get('doll','girl')};
+
+/* ----- theme menu + boy/girl ----- */
+$('#themes').innerHTML=THEMES.map(t=>`<button class="theme sc-${t.id}" data-theme="${t.id}">${icon(item(t.key))}<span>${t.name}</span></button>`).join('');
+$('#themes').addEventListener('click',e=>{const b=e.target.closest('.theme');if(!b)return;audio();warm();startTheme(b.dataset.theme)});
+function paintWho(){
+  $$('[data-who]').forEach(b=>{const g=b.dataset.who;b.classList.toggle('on',g===dress.who);
+    b.innerHTML=body(g).replace('viewBox="0 0 200 320"','viewBox="52 10 96 96"')+(g==='girl'?'เด็กหญิง':'เด็กชาย')});
+  $('#dressIcon').innerHTML=dressed(dress.who,dress.who==='girl'?['dress','bow','shoes']:['pants','shirt','shoes','scarf','hat'])}
+$$('[data-who]').forEach(b=>b.onclick=()=>{audio();dress.who=b.dataset.who;store.set('doll',dress.who);paintWho();speak([[dress.who==='girl'?'เด็กหญิง':'เด็กชาย','th-TH']])});
+paintWho();
+function openDressMenu(){clearTimeout(dress.timer);hush();show('dressMenu')}
+$$('[data-menu]').forEach(b=>b.onclick=()=>{audio();$('#over').hidden=true;openDressMenu()});
+
+/* ----- shared screen pieces ----- */
+function setScreen(mode,th,scene){dress.mode=mode;dress.target=null;
+  $('#dressTitle').textContent=th.name;$('#stage').className='stage sc-'+scene;
+  $('#askIco').hidden=mode==='word';if(mode!=='word')$('#askIco').innerHTML=icon(item(th.key));
+  $('#sayAgain').hidden=mode==='free';$('#clearAll').hidden=mode!=='free';$('#tabs').hidden=mode!=='free';
+  show('dress')}
+function renderDoll(last){$('#doll').innerHTML=body(dress.who)+dress.worn.map(item).sort(byZ).map(c=>`<svg viewBox="0 0 200 320" class="${c.id===last?'layer':''}" aria-label="${c.th}">${c.svg}</svg>`).join('')}
+function renderTray(list){const free=dress.mode==='free',t=$('#tray');t.classList.toggle('free',free);t.scrollLeft=0;
+  t.innerHTML=(free?list:shuffle([...list])).map(c=>`<button class="item${dress.worn.includes(c.id)?(free?' on':' used'):''}" data-id="${c.id}">${icon(c)}<span class="n">${c.th}<i>${c.en}</i></span></button>`).join('')}
+function wear(c){const s=slotsOf(c);dress.worn=dress.worn.filter(id=>!slotsOf(item(id)).some(x=>s.includes(x)));dress.worn.push(c.id)}
+function shake(el){el.classList.remove('shake');void el.offsetWidth;el.classList.add('shake')}
+function startTheme(id){const th=theme(id);dress.theme=th;dress.worn=[];if(id==='word')return startDress();if(id==='free')return startFree();
+  clearTimeout(dress.timer);setScreen('theme',th,th.id);
+  $('#askLead').textContent='ใส่อะไรดีนะ? เลือกให้ครบ 3 ชิ้น';$('#askTh').textContent=th.ask;$('#askEn').textContent=th.en;
+  renderDoll();renderTray([...th.need.map(item),...shuffle(th.dis.map(item)).slice(0,3)]);sayTheme()}
+function sayTheme(){const th=dress.theme;speak([[th.say[0],'th-TH'],[th.say[1],'en-US']])}
+
+/* ----- 1) say-the-word game (the original) ----- */
+function startDress(){clearTimeout(dress.timer);dress.theme=theme('word');dress.worn=[];setScreen('word',dress.theme,'word');
+  $('#askLead').textContent='หยิบอันนี้ให้น้องหน่อย';renderDoll();renderTray(CLOTHES);nextPrompt()}
+function nextPrompt(){const left=CLOTHES.filter(c=>!dress.worn.includes(c.id));
+  if(!left.length){dress.timer=setTimeout(()=>celebrate('แต่งตัวเสร็จแล้ว!','น้องพร้อมไปเที่ยวแล้ว','แต่งต่อตามใจ',()=>startFree(true),'เล่นใหม่',startDress),600);return}
   dress.target=left[Math.random()*left.length|0];$('#askTh').textContent=dress.target.th;$('#askEn').textContent=dress.target.en;sayAsk()}
 function sayAsk(){if(dress.target)speak([[`หยิบ${dress.target.th}ให้หน่อย`,'th-TH'],[dress.target.en,'en-US']])}
-$('#sayAgain').onclick=()=>{audio();dress.mode==='wx'?sayWx():sayAsk()};
-function choose(c,el){if(dress.worn.has(c.id)||!dress.target)return;
-  if(c.id===dress.target.id){dress.worn.add(c.id);dress.target=null;renderDoll(c.id);el.classList.add('used');hush();cheer();later(()=>speak([[c.th,'th-TH'],[c.en,'en-US']]),1500);addStar();dress.timer=setTimeout(nextPrompt,3600)}
-  else{hush();buzz();el.classList.remove('shake');void el.offsetWidth;el.classList.add('shake');setTimeout(()=>speak([[`อันนี้คือ${c.th}`,'th-TH'],[c.en,'en-US']]),350)}}
+function choose(c,el){if(dress.worn.includes(c.id)||!dress.target)return;
+  if(c.id===dress.target.id){wear(c);dress.target=null;renderDoll(c.id);el.classList.add('used');hush();cheer();later(()=>speak([[c.th,'th-TH'],[c.en,'en-US']]),1500);addStar();dress.timer=setTimeout(nextPrompt,3600)}
+  else{hush();buzz();shake(el);setTimeout(()=>speak([[`อันนี้คือ${c.th}`,'th-TH'],[c.en,'en-US']]),350)}}
+
+/* ----- 2) themes: pick the 3 things that suit the day ----- */
+function chooseTheme(c,el){const th=dress.theme;if(dress.worn.includes(c.id))return;
+  if(th.need.includes(c.id)){wear(c);renderDoll(c.id);el.classList.add('used');hush();cheer();later(()=>speak([[c.th,'th-TH'],[c.en,'en-US']]),1500);addStar();
+    if(th.need.every(id=>dress.worn.includes(id))){clearTimeout(dress.timer);dress.timer=setTimeout(()=>celebrate('เก่งมาก!',th.done,'แต่งต่อตามใจ',()=>startFree(true),'เลือกชุดอื่น',openDressMenu),3600)}}
+  else{hush();buzz();shake(el);setTimeout(()=>speak([[`${c.th} ใช้ตอน${theme(c.t).when}จ้ะ`,'th-TH'],[c.en,'en-US']]),350)}}
+
+/* ----- 3) freestyle: everything, no wrong answers (keep=true continues from the outfit just finished) ----- */
+function startFree(keep){clearTimeout(dress.timer);if(!keep){dress.worn=[];dress.theme=theme('free')}
+  setScreen('free',theme('free'),keep?dress.theme.id:'free');
+  $('#askLead').textContent='แตะเพื่อใส่ แตะซ้ำเพื่อถอด';$('#askTh').textContent='แต่งตามใจ';$('#askEn').textContent='';
+  renderDoll();renderTabs();renderFreeTray();speak([['แต่งตัวตามใจเลยจ้ะ','th-TH']])}
+function renderTabs(){$('#tabs').innerHTML=CATS.map(([k,n,ic])=>`<button class="tab${k===dress.cat?' on':''}" data-cat="${k}">${icon(item(ic))}<span>${n}</span></button>`).join('')}
+function renderFreeTray(){renderTray(ITEMS.filter(c=>catOf(c)===dress.cat))}
+$('#tabs').addEventListener('click',e=>{const b=e.target.closest('.tab');if(!b)return;audio();dress.cat=b.dataset.cat;renderTabs();renderFreeTray()});
+function chooseFree(c){hush();
+  if(dress.worn.includes(c.id)){dress.worn=dress.worn.filter(id=>id!==c.id);renderDoll()}
+  else{wear(c);renderDoll(c.id);ding();later(()=>speak([[c.th,'th-TH'],[c.en,'en-US']]),300)}
+  const x=$('#tray').scrollLeft;renderFreeTray();$('#tray').scrollLeft=x}
+$('#clearAll').onclick=()=>{audio();hush();dress.worn=[];renderDoll();renderFreeTray()};
+
+/* ----- input: tap or drag onto the doll (freestyle = tap only so the tray can scroll) ----- */
+const pick=(c,el)=>dress.mode==='free'?chooseFree(c):dress.mode==='theme'?chooseTheme(c,el):choose(c,el);
+$('#sayAgain').onclick=()=>{audio();dress.mode==='theme'?sayTheme():sayAsk()};
 let dd=null;
-$('#tray').addEventListener('pointerdown',e=>{const el=e.target.closest('.item');if(!el||el.classList.contains('used'))return;e.preventDefault();audio();
-  const c=curList().find(c=>c.id===el.dataset.id);dd={el,c,x:e.clientX,y:e.clientY,moved:false,g:null};try{el.setPointerCapture(e.pointerId)}catch(_){}});
+$('#tray').addEventListener('pointerdown',e=>{if(dress.mode==='free')return;const el=e.target.closest('.item');if(!el||el.classList.contains('used'))return;e.preventDefault();audio();
+  const c=item(el.dataset.id);dd={el,c,x:e.clientX,y:e.clientY,moved:false,g:null};try{el.setPointerCapture(e.pointerId)}catch(_){}});
 $('#tray').addEventListener('pointermove',e=>{if(!dd)return;if(!dd.moved&&Math.hypot(e.clientX-dd.x,e.clientY-dd.y)>10){dd.moved=true;dd.g=document.createElement('div');dd.g.className='ghost';dd.g.innerHTML=icon(dd.c);document.body.appendChild(dd.g)}
   if(dd.g){dd.g.style.left=e.clientX+'px';dd.g.style.top=e.clientY+'px'}});
 function dropItem(e){if(!dd)return;const d=dd;dd=null;if(d.g)d.g.remove();if(!e)return;
   if(!d.moved){pick(d.c,d.el);return}const r=$('#doll').getBoundingClientRect();
   if(e.clientX>=r.left&&e.clientX<=r.right&&e.clientY>=r.top&&e.clientY<=r.bottom)pick(d.c,d.el)}
 $('#tray').addEventListener('pointerup',dropItem);$('#tray').addEventListener('pointercancel',()=>dropItem(null));
-$('#tray').addEventListener('click',e=>{if(e.detail!==0)return;const el=e.target.closest('.item');if(el)pick(curList().find(c=>c.id===el.dataset.id),el)});
-$('#doll').addEventListener('click',()=>{const w=[...dress.worn].pop();if(w){const c=curList().find(c=>c.id===w);speak([[c.th,'th-TH'],[c.en,'en-US']])}});
-
-/* ---------- dress for the weather (same doll, same 200x320 space) ---------- */
-const WX={
- rain:{th:'ฝนตก',en:'rainy',say:'a rainy day',done:'น้องพร้อมออกไปเล่นฝนแล้ว',dis:['shades','sunhat','wscarf','beanie'],
-  ico:`<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M13 31a8 8 0 0 1 1-16 11 11 0 0 1 21 2 7 7 0 0 1 0 14Z" fill="#8FA3BC"/><path d="M16 36l-3 7M25 36l-3 7M34 36l-3 7" stroke="#3C86F0" stroke-width="4" stroke-linecap="round"/></svg>`},
- sun:{th:'แดดร้อน',en:'sunny',say:'a sunny day',done:'น้องพร้อมไปเที่ยวทะเลแล้ว',dis:['jacket','wscarf','beanie','boots','raincoat'],
-  ico:`<svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="10" fill="#FFC53A"/><path d="M24 4v6M24 38v6M4 24h6M38 24h6M10 10l4 4M34 34l4 4M38 10l-4 4M14 34l-4 4" stroke="#FFA81F" stroke-width="4" stroke-linecap="round"/></svg>`},
- cold:{th:'อากาศหนาว',en:'cold',say:'a cold day',done:'น้องอุ่นสบาย พร้อมไปเที่ยวดอยแล้ว',dis:['shades','shorts','sunhat'],
-  ico:`<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 4v40M7 14l34 20M41 14L7 34M18 8l6 5 6-5M18 40l6-5 6 5" stroke="#5BA8F0" stroke-width="4" stroke-linecap="round" fill="none"/></svg>`}};
-const COAT='M66 110Q70 100 88 97H112Q130 100 134 110L159 104L175 168L152 174L134 150V';
-const WX_SCARF=CLOTHES.find(c=>c.id==='scarf');
-const WX_ITEMS=[ // list order = layering order on the doll
- {id:'boots',w:'rain',th:'รองเท้าบูท',en:'boots',vb:'54 240 92 64',svg:`<path d="M70 246H98V300H64Q58 300 58 294Q58 286 70 284Z" fill="#FF6B4A"/><path d="M130 246H102V300H136Q142 300 142 294Q142 286 130 284Z" fill="#FF6B4A"/><path d="M68 246H100V256H68ZM100 246H132V256H100Z" fill="#E8553A"/><rect x="58" y="295" width="40" height="6" rx="3" fill="#B53A24"/><rect x="102" y="295" width="40" height="6" rx="3" fill="#B53A24"/>`},
- {id:'shorts',w:'sun',th:'กางเกงขาสั้น',en:'shorts',vb:'60 178 80 58',svg:`<path d="M66 184H134L132 230H104L100 208L96 230H68Z" fill="#3CB4C8"/><path d="M66 184H134V194H66Z" fill="#2A97AA"/><circle cx="84" cy="212" r="4" fill="#FFC53A"/><circle cx="118" cy="214" r="4" fill="#FFC53A"/>`},
- {id:'raincoat',w:'rain',th:'เสื้อกันฝน',en:'raincoat',vb:'22 94 156 140',svg:`<path d="${COAT}226Q100 232 66 226V150L48 174L25 168L41 104Z" fill="#FFD23F"/><path d="M88 97Q100 116 112 97" fill="#E8B400"/><path d="M100 110V228M26 162L49 168M174 162L151 168" stroke="#E8B400" stroke-width="4"/><circle cx="92" cy="132" r="3.5" fill="#3C86F0"/><circle cx="92" cy="158" r="3.5" fill="#3C86F0"/><circle cx="92" cy="184" r="3.5" fill="#3C86F0"/><path d="M72 192H88V206H72ZM112 192H128V206H112Z" fill="#F2C200"/>`},
- {id:'jacket',w:'cold',th:'เสื้อกันหนาว',en:'jacket',vb:'22 94 156 124',svg:`<path d="${COAT}212Q100 218 66 212V150L48 174L25 168L41 104Z" fill="#E8553A"/><path d="M66 140H134M66 168H134M66 194H134" stroke="#C9432B" stroke-width="3"/><path d="M100 104V214" stroke="#FFC53A" stroke-width="3"/><path d="M26 162L49 168M174 162L151 168" stroke="#FFFFFF" stroke-width="6"/>`},
- {id:'wscarf',w:'cold',th:'ผ้าพันคอ',en:'scarf',vb:WX_SCARF.vb,svg:WX_SCARF.svg},
- {id:'shades',w:'sun',th:'แว่นกันแดด',en:'sunglasses',vb:'60 44 80 32',svg:`<path d="M72 52H98V62Q98 70 88 70H80Q72 70 72 62Z" fill="#22314A"/><path d="M102 52H128V62Q128 70 120 70H112Q102 70 102 62Z" fill="#22314A"/><path d="M98 56Q100 53 102 56M72 54L63 50M128 54L137 50" stroke="#22314A" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M77 57h6M107 57h6" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" opacity=".7"/>`},
- {id:'sunhat',w:'sun',th:'หมวกกันแดด',en:'sun hat',vb:'36 4 128 52',svg:`<ellipse cx="100" cy="40" rx="62" ry="12" fill="#E9B85C"/><path d="M70 40Q70 8 100 8Q130 8 130 40Z" fill="#F7D58A"/><path d="M71 30H129V38H71Z" fill="#FF8FA3"/><circle cx="122" cy="34" r="5" fill="#FFC53A"/>`},
- {id:'beanie',w:'cold',th:'หมวกไหมพรม',en:'beanie',vb:'54 0 92 56',svg:`<path d="M62 46Q60 10 100 10Q140 10 138 46Z" fill="#21A05C"/><path d="M68 30Q100 18 132 30" stroke="#FFFFFF" stroke-width="4" fill="none" opacity=".6"/><rect x="58" y="38" width="84" height="14" rx="7" fill="#178A4C"/><path d="M70 40v10M82 40v10M94 40v10M106 40v10M118 40v10M130 40v10" stroke="#21A05C" stroke-width="3"/><circle cx="100" cy="11" r="8" fill="#FFFFFF" stroke="#C3DAEE" stroke-width="2"/>`},
- {id:'umbrella',w:'rain',th:'ร่ม',en:'umbrella',vb:'104 0 96 196',svg:`<path d="M153 44L165 180Q167 192 158 192Q152 191 153 184" stroke="#22314A" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M108 44Q110 6 153 6Q196 6 198 44Q187 36 175.5 44Q164 36 153 44Q142 36 130.5 44Q119 36 108 44Z" fill="#3C86F0"/><path d="M153 6Q138 20 130.5 44M153 6Q168 20 175.5 44" stroke="#2C6CD0" stroke-width="3" fill="none"/><path d="M153 6V1" stroke="#22314A" stroke-width="3" stroke-linecap="round"/>`}];
-const curList=()=>dress.mode==='wx'?WX_ITEMS:CLOTHES;
-const pick=(c,el)=>dress.mode==='wx'?chooseWx(c,el):choose(c,el);
-$('#wxIcon').innerHTML=BODY.replace('</svg>',WX_ITEMS.filter(c=>c.w==='rain').map(c=>c.svg).join('')+'</svg>');
-function wxScene(k){$('#stage').className='stage'+(k?' wx-'+k:'');$('#wxIco').hidden=!k;
-  if(k){$('#wxIco').innerHTML=WX[k].ico;$('#askLead').textContent='วันนี้อากาศแบบนี้ ใส่อะไรดีนะ?';$('#askTh').textContent=WX[k].th;$('#askEn').textContent=WX[k].en}
-  else $('#askLead').textContent='หยิบอันนี้ให้น้องหน่อย'}
-function startWeather(){clearTimeout(dress.timer);dress.mode='wx';dress.worn=new Set();dress.target=null;
-  const ks=Object.keys(WX).filter(k=>k!==dress.wx);dress.wx=ks[Math.random()*ks.length|0];const W=WX[dress.wx];
-  const need=WX_ITEMS.filter(c=>c.w===dress.wx),others=shuffle(WX_ITEMS.filter(c=>W.dis.includes(c.id))).slice(0,3);
-  wxScene(dress.wx);show('dress');renderDoll();renderTray([...need,...others]);sayWx()}
-function sayWx(){const W=WX[dress.wx];speak([[`วันนี้${W.th} ใส่อะไรดีนะ`,'th-TH'],[`It's ${W.say}`,'en-US']])}
-function chooseWx(c,el){if(dress.worn.has(c.id))return;
-  if(c.w===dress.wx){dress.worn.add(c.id);renderDoll(c.id);el.classList.add('used');hush();cheer();later(()=>speak([[c.th,'th-TH'],[c.en,'en-US']]),1500);addStar();
-    if(WX_ITEMS.every(i=>i.w!==dress.wx||dress.worn.has(i.id))){clearTimeout(dress.timer);dress.timer=setTimeout(()=>celebrate('พร้อมแล้ว!',WX[dress.wx].done,'เล่นอีก',startWeather),3600)}}
-  else{hush();buzz();el.classList.remove('shake');void el.offsetWidth;el.classList.add('shake');setTimeout(()=>speak([[`${c.th} ใช้ตอน${WX[c.w].th}จ้ะ`,'th-TH'],[c.en,'en-US']]),350)}}
+$('#tray').addEventListener('click',e=>{if(e.detail!==0&&dress.mode!=='free')return;const el=e.target.closest('.item');if(!el)return;audio();pick(item(el.dataset.id),el)});
+$('#doll').addEventListener('click',()=>{const w=dress.worn[dress.worn.length-1];if(w){const c=item(w);speak([[c.th,'th-TH'],[c.en,'en-US']])}});
 
 /* ---------- celebration ---------- */
-function celebrate(title,text,label,go){
+function celebrate(title,text,label,go,label2,go2){
   $('#overT').textContent=title;$('#overP').textContent=text;$('#overBtn').textContent=label;$('#over').hidden=false;hush();if(S.tada)playRec('tada',.9);later(()=>playRec('applause',.8),200);later(()=>speak([['เย้ เก่งมาก','th-TH']]),900);
   const cols=['var(--tomato)','var(--sun)','var(--grass)','var(--ocean)','var(--berry)'];
   for(let i=0;i<44;i++){const s=document.createElement('div');s.className='conf';s.style.left=Math.random()*100+'vw';s.style.background=cols[i%5];s.style.animationDelay=Math.random()*.6+'s';s.style.animationDuration=1.6+Math.random()+'s';document.body.appendChild(s);setTimeout(()=>s.remove(),3200)}
-  $('#overBtn').onclick=()=>{hush();$('#over').hidden=true;go()}}
+  $('#overBtn').onclick=()=>{hush();$('#over').hidden=true;go()};
+  const b2=$('#overBtn2');b2.hidden=!label2;if(label2){b2.textContent=label2;b2.onclick=()=>{hush();$('#over').hidden=true;go2()}}}
 </script>
 
 <script>if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));</script>
