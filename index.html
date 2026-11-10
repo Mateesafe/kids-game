@@ -32,7 +32,7 @@ img{-webkit-user-drag:none;user-drag:none;pointer-events:none}
 .sub{margin:-4px 0 0;color:var(--muted);font-size:17px}
 
 /* home */
-.tiles{flex:1;min-height:0;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:14px}
+.tiles{flex:1;min-height:0;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr 1fr;gap:14px}
 .tile{position:relative;overflow:hidden;border:none;border-radius:28px;padding:0;display:flex;flex-direction:column;justify-content:flex-end;
   box-shadow:0 6px 0 rgba(34,49,74,.2);transition:transform .12s;min-height:0;background:var(--paper)}
 .tile:active{transform:translateY(4px);box-shadow:0 2px 0 rgba(34,49,74,.2)}
@@ -44,7 +44,9 @@ img{-webkit-user-drag:none;user-drag:none;pointer-events:none}
 .t-fruit .badge,.t-fruit .lbl{background:var(--grass)}
 .t-dress{background:var(--sun)}
 .t-dress .lbl{background:#E8A80F}
-.t-dress svg{position:absolute;inset:6px 0 40px;margin:auto;height:calc(100% - 46px);width:auto}
+.t-dress svg,.t-wx svg{position:absolute;inset:6px 0 40px;margin:auto;height:calc(100% - 46px);width:auto}
+.t-wx{background:#9AD4F2;grid-column:span 2}
+.t-wx .lbl{background:#1F8FCB}
 .credit-link{border:none;background:none;color:var(--muted);font-size:14px;text-decoration:underline;align-self:center;padding:2px 8px}
 
 /* matching */
@@ -80,13 +82,26 @@ img{-webkit-user-drag:none;user-drag:none;pointer-events:none}
 .doll{position:relative;height:100%;aspect-ratio:200/320;max-width:100%}
 .doll svg{position:absolute;inset:0;width:100%;height:100%}
 .doll .layer{animation:fade .35s}
+/* dress for the weather: sky behind the doll */
+.stage{position:relative;border-radius:28px;transition:background .4s}
+.stage.wx-rain{background:linear-gradient(#AFC3D8,#DCE8F3)}
+.stage.wx-sun{background:radial-gradient(circle at 86% 14%,#FFF3B0 0 9%,#FFE07A 9.5% 13%,transparent 13.5%),linear-gradient(#BFE6FF,#FFF4D6)}
+.stage.wx-cold{background:linear-gradient(#CFE3F5,#F4F9FF)}
+.stage.wx-rain::before,.stage.wx-cold::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none}
+.stage.wx-rain::before{background-image:radial-gradient(1.5px 6px at 50% 50%,rgba(44,108,208,.6) 95%,transparent),radial-gradient(1.5px 6px at 50% 50%,rgba(44,108,208,.45) 95%,transparent);background-size:26px 40px,34px 60px;background-position:0 0,13px 20px;animation:rain .6s linear infinite}
+.stage.wx-cold::before{background-image:radial-gradient(circle 3.5px,#fff 90%,transparent),radial-gradient(circle 2.5px,#fff 90%,transparent);background-size:40px 40px,28px 56px;background-position:0 0,14px 10px;animation:snow 5s linear infinite}
+@keyframes rain{to{background-position:0 40px,13px 80px}}
+@keyframes snow{to{background-position:0 40px,14px 66px}}
+.wxIco{width:56px;height:56px;flex:none}.wxIco svg{width:100%;height:100%}
+@media (prefers-reduced-motion:reduce){.stage::before{animation:none!important}}
 @keyframes fade{from{opacity:0;transform:translateY(-6%)}to{opacity:1;transform:none}}
 @keyframes pop{from{transform:translateX(-50%) scale(.4)}to{transform:translateX(-50%) scale(1)}}
 .tray{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding-bottom:4px}
 .item{background:var(--paper);border:3px solid var(--line);border-radius:18px;padding:6px 2px 4px;display:flex;flex-direction:column;align-items:center;gap:2px;touch-action:none}
 .item svg{height:clamp(36px,10vw,50px);width:clamp(56px,16vw,80px);pointer-events:none}
 .item .n{font-size:15px;font-weight:700}
-.item .n i{font-style:normal;color:var(--ocean);font-weight:600;margin-left:4px}
+.item .n{text-align:center;line-height:1.15}
+.item .n i{display:block;font-style:normal;color:var(--ocean);font-weight:600;font-size:.85em}
 .item.used{opacity:.25;pointer-events:none}
 .ghost{position:fixed;z-index:50;pointer-events:none;transform:translate(-50%,-50%) scale(1.4);width:90px;height:60px}
 
@@ -148,7 +163,8 @@ body{background:radial-gradient(circle,rgba(255,255,255,.6) 3px,transparent 4px)
  .tile{border-radius:34px}
  .tile .badge{min-width:72px;height:72px;font-size:44px;border-radius:22px;top:14px;left:14px}
  .tile span.lbl{font-size:28px;padding:12px 18px}
- .t-dress svg{inset:10px 0 56px;height:calc(100% - 66px)}
+ .t-dress svg,.t-wx svg{inset:10px 0 56px;height:calc(100% - 66px)}
+ .wxIco{width:72px;height:72px}
  .credit-link{font-size:17px}
  .col{width:40%;gap:16px}
  .card{border-radius:28px;border-width:5px}
@@ -170,9 +186,10 @@ body{background:radial-gradient(circle,rgba(255,255,255,.6) 3px,transparent 4px)
  .over button{font-size:28px;padding:16px 46px}
  .credits .box{max-width:720px}.credits ol{font-size:14px}
 }
-/* iPad held sideways: the 4 game tiles sit in one row */
+/* iPad held sideways: 3 game tiles on top, 2 wider ones below */
 @media (min-width:700px) and (orientation:landscape){
- .tiles{grid-template-columns:repeat(4,1fr);grid-template-rows:1fr}
+ .tiles{grid-template-columns:repeat(6,1fr);grid-template-rows:1fr 1fr}
+ .tile{grid-column:span 2}.t-dress,.t-wx{grid-column:span 3}
  .play{flex-direction:column;gap:12%}
  .col{width:100%;flex-direction:row;flex:1;gap:18px}
  .card .dot,.card[data-side="L"] .dot,.card[data-side="R"] .dot{left:50%;right:auto;margin:0 0 0 -13px;top:auto}
@@ -195,6 +212,7 @@ body{background:radial-gradient(circle,rgba(255,255,255,.6) 3px,transparent 4px)
       <button class="tile t-eng" data-go="eng"><img class="pic" data-p="en_L" alt=""><div class="badge">Aa</div><span class="lbl">ABC จับคู่ภาพ</span></button>
       <button class="tile t-fruit" data-go="fruit"><img class="pic" data-p="watermelon_c" alt=""><div class="badge">🍉</div><span class="lbl">ผลไม้ ข้างนอก-ข้างใน</span></button>
       <button class="tile t-dress" data-go="dress"><span id="dressIcon"></span><span class="lbl">แต่งตัวให้น้อง</span></button>
+      <button class="tile t-wx" data-go="wx"><span id="wxIcon"></span><span class="lbl">แต่งตัวตามอากาศ</span></button>
     </div>
     <button class="credit-link" id="openCredits">ที่มาของภาพและเสียง</button>
   </section>
@@ -213,10 +231,10 @@ body{background:radial-gradient(circle,rgba(255,255,255,.6) 3px,transparent 4px)
   <section class="screen" id="dress" hidden>
     <div class="top"><button class="homeBtn" data-home aria-label="กลับหน้าแรก"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="31" y="7" width="7" height="11" rx="2.5" fill="#FF8FA3"/><path d="M10 22V38a4 4 0 0 0 4 4h20a4 4 0 0 0 4-4V22L24 10Z" fill="#FFE08A"/><path d="M5 24L24 7L43 24" fill="none" stroke="#FF6B4A" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><rect x="20" y="29" width="8" height="13" rx="4" fill="#7B5CF0"/><path d="M16 25.5c-1.6-1.6-4 .2-2.6 2l2.6 2.6 2.6-2.6c1.4-1.8-1-3.6-2.6-2z" fill="#FF6B4A"/><circle cx="25.5" cy="36" r="1.2" fill="#FFE08A"/></svg></button><h2>แต่งตัวให้น้อง</h2><button class="musicBtn" aria-label="ปิดเพลง"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M18 35V13l20-5v22" fill="none" stroke="#7B5CF0" stroke-width="4" stroke-linejoin="round"/><path d="M18 13l20-5" stroke="#7B5CF0" stroke-width="7"/><ellipse cx="13" cy="36" rx="7" ry="5.5" fill="#7B5CF0"/><ellipse cx="33" cy="31" rx="7" ry="5.5" fill="#FF6B4A"/><path class="slash" d="M7 7L41 41" stroke="#FF6B4A" stroke-width="5" stroke-linecap="round"/></svg></button><div class="stars">⭐ <b>0</b></div></div>
     <div class="ask">
-      <div class="words"><div class="lead">หยิบอันนี้ให้น้องหน่อย</div><div class="w"><span id="askTh">หมวก</span><small id="askEn">hat</small></div></div>
+      <span class="wxIco" id="wxIco" hidden></span><div class="words"><div class="lead" id="askLead">หยิบอันนี้ให้น้องหน่อย</div><div class="w"><span id="askTh">หมวก</span><small id="askEn">hat</small></div></div>
       <button class="say" id="sayAgain" aria-label="ฟังอีกครั้ง">🔊</button>
     </div>
-    <div class="stage"><div class="doll" id="doll"></div></div>
+    <div class="stage" id="stage"><div class="doll" id="doll"></div></div>
     <div class="tray" id="tray"></div>
   </section>
 </div>
@@ -395,7 +413,7 @@ const MODES={
 /* ---------- navigation ---------- */
 function show(id){$$('.screen').forEach(s=>s.hidden=s.id!==id);if(id==='home')hush()}
 $$('[data-home]').forEach(b=>b.onclick=()=>{clearTimeout(dress.timer);$('#over').hidden=true;show('home')});
-$$('[data-go]').forEach(b=>b.onclick=()=>{audio();warm();const g=b.dataset.go;g==='dress'?startDress():startMatch(g)});
+$$('[data-go]').forEach(b=>b.onclick=()=>{audio();warm();const g=b.dataset.go;g==='dress'?startDress():g==='wx'?startWeather():startMatch(g)});
 
 /* ---------- matching game ---------- */
 const play=$('#play'),lines=$('#lines');
@@ -461,29 +479,65 @@ const BODY=`<svg viewBox="0 0 200 320" aria-hidden="true">
  <path d="M89 75Q100 85 111 75" stroke="#22314A" stroke-width="3.5" fill="none" stroke-linecap="round"/></svg>`;
 const icon=c=>`<svg viewBox="${c.vb}" aria-hidden="true">${c.svg}</svg>`;
 $('#dressIcon').innerHTML=BODY.replace('<svg ','<svg ').replace('</svg>',CLOTHES.filter(c=>c.id!=='glasses').map(c=>c.svg).join('')+'</svg>');
-const dress={worn:new Set(),target:null,timer:null};
-function startDress(){clearTimeout(dress.timer);dress.worn=new Set();show('dress');renderDoll();renderTray();nextPrompt()}
-function renderDoll(last){$('#doll').innerHTML=BODY+CLOTHES.filter(c=>dress.worn.has(c.id)).map(c=>`<svg viewBox="0 0 200 320" class="${c.id===last?'layer':''}" data-id="${c.id}" aria-label="${c.th}">${c.svg}</svg>`).join('')}
-function renderTray(){$('#tray').innerHTML=shuffle([...CLOTHES]).map(c=>`<button class="item${dress.worn.has(c.id)?' used':''}" data-id="${c.id}">${icon(c)}<span class="n">${c.th}<i>${c.en}</i></span></button>`).join('')}
+const dress={worn:new Set(),target:null,timer:null,mode:'word',wx:null};
+function startDress(){clearTimeout(dress.timer);dress.mode='word';dress.worn=new Set();wxScene(null);show('dress');renderDoll();renderTray(CLOTHES);nextPrompt()}
+function renderDoll(last){$('#doll').innerHTML=BODY+curList().filter(c=>dress.worn.has(c.id)).map(c=>`<svg viewBox="0 0 200 320" class="${c.id===last?'layer':''}" data-id="${c.id}" aria-label="${c.th}">${c.svg}</svg>`).join('')}
+function renderTray(list){$('#tray').innerHTML=shuffle([...list]).map(c=>`<button class="item${dress.worn.has(c.id)?' used':''}" data-id="${c.id}">${icon(c)}<span class="n">${c.th}<i>${c.en}</i></span></button>`).join('')}
 function nextPrompt(){const left=CLOTHES.filter(c=>!dress.worn.has(c.id));
   if(!left.length){dress.timer=setTimeout(()=>celebrate('แต่งตัวเสร็จแล้ว!','น้องพร้อมไปเที่ยวแล้ว','ถอดแล้วเล่นใหม่',startDress),600);return}
   dress.target=left[Math.random()*left.length|0];$('#askTh').textContent=dress.target.th;$('#askEn').textContent=dress.target.en;sayAsk()}
 function sayAsk(){if(dress.target)speak([[`หยิบ${dress.target.th}ให้หน่อย`,'th-TH'],[dress.target.en,'en-US']])}
-$('#sayAgain').onclick=()=>{audio();sayAsk()};
+$('#sayAgain').onclick=()=>{audio();dress.mode==='wx'?sayWx():sayAsk()};
 function choose(c,el){if(dress.worn.has(c.id)||!dress.target)return;
   if(c.id===dress.target.id){dress.worn.add(c.id);dress.target=null;renderDoll(c.id);el.classList.add('used');hush();cheer();later(()=>speak([[c.th,'th-TH'],[c.en,'en-US']]),1500);addStar();dress.timer=setTimeout(nextPrompt,3600)}
   else{hush();buzz();el.classList.remove('shake');void el.offsetWidth;el.classList.add('shake');setTimeout(()=>speak([[`อันนี้คือ${c.th}`,'th-TH'],[c.en,'en-US']]),350)}}
 let dd=null;
 $('#tray').addEventListener('pointerdown',e=>{const el=e.target.closest('.item');if(!el||el.classList.contains('used'))return;e.preventDefault();audio();
-  const c=CLOTHES.find(c=>c.id===el.dataset.id);dd={el,c,x:e.clientX,y:e.clientY,moved:false,g:null};try{el.setPointerCapture(e.pointerId)}catch(_){}});
+  const c=curList().find(c=>c.id===el.dataset.id);dd={el,c,x:e.clientX,y:e.clientY,moved:false,g:null};try{el.setPointerCapture(e.pointerId)}catch(_){}});
 $('#tray').addEventListener('pointermove',e=>{if(!dd)return;if(!dd.moved&&Math.hypot(e.clientX-dd.x,e.clientY-dd.y)>10){dd.moved=true;dd.g=document.createElement('div');dd.g.className='ghost';dd.g.innerHTML=icon(dd.c);document.body.appendChild(dd.g)}
   if(dd.g){dd.g.style.left=e.clientX+'px';dd.g.style.top=e.clientY+'px'}});
 function dropItem(e){if(!dd)return;const d=dd;dd=null;if(d.g)d.g.remove();if(!e)return;
-  if(!d.moved){choose(d.c,d.el);return}const r=$('#doll').getBoundingClientRect();
-  if(e.clientX>=r.left&&e.clientX<=r.right&&e.clientY>=r.top&&e.clientY<=r.bottom)choose(d.c,d.el)}
+  if(!d.moved){pick(d.c,d.el);return}const r=$('#doll').getBoundingClientRect();
+  if(e.clientX>=r.left&&e.clientX<=r.right&&e.clientY>=r.top&&e.clientY<=r.bottom)pick(d.c,d.el)}
 $('#tray').addEventListener('pointerup',dropItem);$('#tray').addEventListener('pointercancel',()=>dropItem(null));
-$('#tray').addEventListener('click',e=>{if(e.detail!==0)return;const el=e.target.closest('.item');if(el)choose(CLOTHES.find(c=>c.id===el.dataset.id),el)});
-$('#doll').addEventListener('click',()=>{const w=[...dress.worn].pop();if(w){const c=CLOTHES.find(c=>c.id===w);speak([[c.th,'th-TH'],[c.en,'en-US']])}});
+$('#tray').addEventListener('click',e=>{if(e.detail!==0)return;const el=e.target.closest('.item');if(el)pick(curList().find(c=>c.id===el.dataset.id),el)});
+$('#doll').addEventListener('click',()=>{const w=[...dress.worn].pop();if(w){const c=curList().find(c=>c.id===w);speak([[c.th,'th-TH'],[c.en,'en-US']])}});
+
+/* ---------- dress for the weather (same doll, same 200x320 space) ---------- */
+const WX={
+ rain:{th:'ฝนตก',en:'rainy',say:'a rainy day',done:'น้องพร้อมออกไปเล่นฝนแล้ว',dis:['shades','sunhat','wscarf','beanie'],
+  ico:`<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M13 31a8 8 0 0 1 1-16 11 11 0 0 1 21 2 7 7 0 0 1 0 14Z" fill="#8FA3BC"/><path d="M16 36l-3 7M25 36l-3 7M34 36l-3 7" stroke="#3C86F0" stroke-width="4" stroke-linecap="round"/></svg>`},
+ sun:{th:'แดดร้อน',en:'sunny',say:'a sunny day',done:'น้องพร้อมไปเที่ยวทะเลแล้ว',dis:['jacket','wscarf','beanie','boots','raincoat'],
+  ico:`<svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="10" fill="#FFC53A"/><path d="M24 4v6M24 38v6M4 24h6M38 24h6M10 10l4 4M34 34l4 4M38 10l-4 4M14 34l-4 4" stroke="#FFA81F" stroke-width="4" stroke-linecap="round"/></svg>`},
+ cold:{th:'อากาศหนาว',en:'cold',say:'a cold day',done:'น้องอุ่นสบาย พร้อมไปเที่ยวดอยแล้ว',dis:['shades','shorts','sunhat'],
+  ico:`<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 4v40M7 14l34 20M41 14L7 34M18 8l6 5 6-5M18 40l6-5 6 5" stroke="#5BA8F0" stroke-width="4" stroke-linecap="round" fill="none"/></svg>`}};
+const COAT='M66 110Q70 100 88 97H112Q130 100 134 110L159 104L175 168L152 174L134 150V';
+const WX_SCARF=CLOTHES.find(c=>c.id==='scarf');
+const WX_ITEMS=[ // list order = layering order on the doll
+ {id:'boots',w:'rain',th:'รองเท้าบูท',en:'boots',vb:'54 240 92 64',svg:`<path d="M70 246H98V300H64Q58 300 58 294Q58 286 70 284Z" fill="#FF6B4A"/><path d="M130 246H102V300H136Q142 300 142 294Q142 286 130 284Z" fill="#FF6B4A"/><path d="M68 246H100V256H68ZM100 246H132V256H100Z" fill="#E8553A"/><rect x="58" y="295" width="40" height="6" rx="3" fill="#B53A24"/><rect x="102" y="295" width="40" height="6" rx="3" fill="#B53A24"/>`},
+ {id:'shorts',w:'sun',th:'กางเกงขาสั้น',en:'shorts',vb:'60 178 80 58',svg:`<path d="M66 184H134L132 230H104L100 208L96 230H68Z" fill="#3CB4C8"/><path d="M66 184H134V194H66Z" fill="#2A97AA"/><circle cx="84" cy="212" r="4" fill="#FFC53A"/><circle cx="118" cy="214" r="4" fill="#FFC53A"/>`},
+ {id:'raincoat',w:'rain',th:'เสื้อกันฝน',en:'raincoat',vb:'22 94 156 140',svg:`<path d="${COAT}226Q100 232 66 226V150L48 174L25 168L41 104Z" fill="#FFD23F"/><path d="M88 97Q100 116 112 97" fill="#E8B400"/><path d="M100 110V228M26 162L49 168M174 162L151 168" stroke="#E8B400" stroke-width="4"/><circle cx="92" cy="132" r="3.5" fill="#3C86F0"/><circle cx="92" cy="158" r="3.5" fill="#3C86F0"/><circle cx="92" cy="184" r="3.5" fill="#3C86F0"/><path d="M72 192H88V206H72ZM112 192H128V206H112Z" fill="#F2C200"/>`},
+ {id:'jacket',w:'cold',th:'เสื้อกันหนาว',en:'jacket',vb:'22 94 156 124',svg:`<path d="${COAT}212Q100 218 66 212V150L48 174L25 168L41 104Z" fill="#E8553A"/><path d="M66 140H134M66 168H134M66 194H134" stroke="#C9432B" stroke-width="3"/><path d="M100 104V214" stroke="#FFC53A" stroke-width="3"/><path d="M26 162L49 168M174 162L151 168" stroke="#FFFFFF" stroke-width="6"/>`},
+ {id:'wscarf',w:'cold',th:'ผ้าพันคอ',en:'scarf',vb:WX_SCARF.vb,svg:WX_SCARF.svg},
+ {id:'shades',w:'sun',th:'แว่นกันแดด',en:'sunglasses',vb:'60 44 80 32',svg:`<path d="M72 52H98V62Q98 70 88 70H80Q72 70 72 62Z" fill="#22314A"/><path d="M102 52H128V62Q128 70 120 70H112Q102 70 102 62Z" fill="#22314A"/><path d="M98 56Q100 53 102 56M72 54L63 50M128 54L137 50" stroke="#22314A" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M77 57h6M107 57h6" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" opacity=".7"/>`},
+ {id:'sunhat',w:'sun',th:'หมวกกันแดด',en:'sun hat',vb:'36 4 128 52',svg:`<ellipse cx="100" cy="40" rx="62" ry="12" fill="#E9B85C"/><path d="M70 40Q70 8 100 8Q130 8 130 40Z" fill="#F7D58A"/><path d="M71 30H129V38H71Z" fill="#FF8FA3"/><circle cx="122" cy="34" r="5" fill="#FFC53A"/>`},
+ {id:'beanie',w:'cold',th:'หมวกไหมพรม',en:'beanie',vb:'54 0 92 56',svg:`<path d="M62 46Q60 10 100 10Q140 10 138 46Z" fill="#21A05C"/><path d="M68 30Q100 18 132 30" stroke="#FFFFFF" stroke-width="4" fill="none" opacity=".6"/><rect x="58" y="38" width="84" height="14" rx="7" fill="#178A4C"/><path d="M70 40v10M82 40v10M94 40v10M106 40v10M118 40v10M130 40v10" stroke="#21A05C" stroke-width="3"/><circle cx="100" cy="11" r="8" fill="#FFFFFF" stroke="#C3DAEE" stroke-width="2"/>`},
+ {id:'umbrella',w:'rain',th:'ร่ม',en:'umbrella',vb:'104 0 96 196',svg:`<path d="M153 44L165 180Q167 192 158 192Q152 191 153 184" stroke="#22314A" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M108 44Q110 6 153 6Q196 6 198 44Q187 36 175.5 44Q164 36 153 44Q142 36 130.5 44Q119 36 108 44Z" fill="#3C86F0"/><path d="M153 6Q138 20 130.5 44M153 6Q168 20 175.5 44" stroke="#2C6CD0" stroke-width="3" fill="none"/><path d="M153 6V1" stroke="#22314A" stroke-width="3" stroke-linecap="round"/>`}];
+const curList=()=>dress.mode==='wx'?WX_ITEMS:CLOTHES;
+const pick=(c,el)=>dress.mode==='wx'?chooseWx(c,el):choose(c,el);
+$('#wxIcon').innerHTML=BODY.replace('</svg>',WX_ITEMS.filter(c=>c.w==='rain').map(c=>c.svg).join('')+'</svg>');
+function wxScene(k){$('#stage').className='stage'+(k?' wx-'+k:'');$('#wxIco').hidden=!k;
+  if(k){$('#wxIco').innerHTML=WX[k].ico;$('#askLead').textContent='วันนี้อากาศแบบนี้ ใส่อะไรดีนะ?';$('#askTh').textContent=WX[k].th;$('#askEn').textContent=WX[k].en}
+  else $('#askLead').textContent='หยิบอันนี้ให้น้องหน่อย'}
+function startWeather(){clearTimeout(dress.timer);dress.mode='wx';dress.worn=new Set();dress.target=null;
+  const ks=Object.keys(WX).filter(k=>k!==dress.wx);dress.wx=ks[Math.random()*ks.length|0];const W=WX[dress.wx];
+  const need=WX_ITEMS.filter(c=>c.w===dress.wx),others=shuffle(WX_ITEMS.filter(c=>W.dis.includes(c.id))).slice(0,3);
+  wxScene(dress.wx);show('dress');renderDoll();renderTray([...need,...others]);sayWx()}
+function sayWx(){const W=WX[dress.wx];speak([[`วันนี้${W.th} ใส่อะไรดีนะ`,'th-TH'],[`It's ${W.say}`,'en-US']])}
+function chooseWx(c,el){if(dress.worn.has(c.id))return;
+  if(c.w===dress.wx){dress.worn.add(c.id);renderDoll(c.id);el.classList.add('used');hush();cheer();later(()=>speak([[c.th,'th-TH'],[c.en,'en-US']]),1500);addStar();
+    if(WX_ITEMS.every(i=>i.w!==dress.wx||dress.worn.has(i.id))){clearTimeout(dress.timer);dress.timer=setTimeout(()=>celebrate('พร้อมแล้ว!',WX[dress.wx].done,'เล่นอีก',startWeather),3600)}}
+  else{hush();buzz();el.classList.remove('shake');void el.offsetWidth;el.classList.add('shake');setTimeout(()=>speak([[`${c.th} ใช้ตอน${WX[c.w].th}จ้ะ`,'th-TH'],[c.en,'en-US']]),350)}}
 
 /* ---------- celebration ---------- */
 function celebrate(title,text,label,go){
