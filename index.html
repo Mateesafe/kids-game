@@ -98,6 +98,12 @@ img{-webkit-user-drag:none;user-drag:none;pointer-events:none}
 @keyframes rain{to{background-position:0 40px,13px 80px}}
 @keyframes snow{to{background-position:0 40px,14px 66px}}
 @media (prefers-reduced-motion:reduce){.stage::before{animation:none!important}}
+/* arrows beside the doll: jump to the previous / next theme */
+.thArrow{position:absolute;top:50%;z-index:3;width:54px;height:54px;margin-top:-27px;border:none;border-radius:50%;padding:9px;display:grid;place-items:center;transition:transform .1s}
+.thArrow svg{width:100%;height:100%}
+.thArrow.prev{left:8px;background:var(--berry);box-shadow:0 5px 0 #5A3FC8}.thArrow.prev svg{transform:scaleX(-1)}
+.thArrow.next{right:8px;background:var(--grass);box-shadow:0 5px 0 #17804A}
+.thArrow:active{transform:translateY(4px);box-shadow:none}
 .askIco{width:56px;height:56px;flex:none}.askIco svg{width:100%;height:100%}
 .clear{border:none;background:var(--tomato);color:var(--paper);border-radius:999px;padding:8px 14px;font-size:16px;font-weight:700;flex:none;box-shadow:0 4px 0 #C9432B}
 .clear:active{transform:translateY(3px);box-shadow:0 1px 0 #C9432B}
@@ -193,6 +199,7 @@ body{background:radial-gradient(circle,rgba(255,255,255,.6) 3px,transparent 4px)
  .tile span.lbl{font-size:28px;padding:12px 18px}
  .t-dress svg{inset:10px 0 56px;height:calc(100% - 66px)}
  .askIco{width:72px;height:72px}
+ .thArrow{width:76px;height:76px;margin-top:-38px;padding:12px}.thArrow.prev{left:14px}.thArrow.next{right:14px}
  .who button{font-size:22px}.who button svg{width:56px;height:56px}
  .themes{gap:16px}.theme{border-radius:28px}.theme span{font-size:24px}
  .tray.free{grid-template-columns:none;grid-auto-columns:calc((100% - 60px)/6)}
@@ -271,7 +278,7 @@ body{background:radial-gradient(circle,rgba(255,255,255,.6) 3px,transparent 4px)
       <span class="askIco" id="askIco" hidden></span><div class="words"><div class="lead" id="askLead">หยิบอันนี้ให้น้องหน่อย</div><div class="w"><span id="askTh">หมวก</span><small id="askEn">hat</small></div></div>
       <button class="say" id="sayAgain" aria-label="ฟังอีกครั้ง">🔊</button><button class="clear" id="clearAll" hidden>ถอดหมด</button>
     </div>
-    <div class="stage" id="stage"><div class="doll" id="doll"></div></div>
+    <div class="stage" id="stage"><button class="thArrow prev" id="thPrev" aria-label="ธีมก่อนหน้า"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M19 12L31 24L19 36" fill="none" stroke="#fff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div class="doll" id="doll"></div><button class="thArrow next" id="thNext" aria-label="ธีมถัดไป"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M19 12L31 24L19 36" fill="none" stroke="#fff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
     <div class="tabs" id="tabs" hidden></div>
     <div class="tray" id="tray"></div>
   </section>
@@ -637,6 +644,8 @@ function chooseFree(c){hush();
   if(dress.worn.includes(c.id)){dress.worn=dress.worn.filter(id=>id!==c.id);renderDoll()}
   else{wear(c);renderDoll(c.id);ding();later(()=>speak([[c.th,'th-TH'],[c.en,'en-US']]),300)}
   const x=$('#tray').scrollLeft;renderFreeTray();$('#tray').scrollLeft=x}
+function stepTheme(d){const i=THEMES.indexOf(dress.theme),n=THEMES[(i+d+THEMES.length)%THEMES.length];audio();hush();clearTimeout(dress.timer);$('#over').hidden=true;startTheme(n.id)}
+$('#thPrev').onclick=()=>stepTheme(-1);$('#thNext').onclick=()=>stepTheme(1);
 $('#clearAll').onclick=()=>{audio();hush();dress.worn=[];renderDoll();renderFreeTray()};
 
 /* ----- input: tap or drag onto the doll (freestyle = tap only so the tray can scroll) ----- */
