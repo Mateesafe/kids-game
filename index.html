@@ -124,7 +124,7 @@ img{-webkit-user-drag:none;user-drag:none;pointer-events:none}
 .tab{flex:1;min-width:0;border:3px solid var(--line);background:var(--paper);border-radius:16px;padding:3px 2px;display:flex;flex-direction:column;align-items:center;font-size:13px;font-weight:700;line-height:1.1}
 .tab svg{height:26px;width:40px;pointer-events:none}
 .tab.on{border-color:var(--berry);background:#EFE9FF}
-.tray.free{grid-template-columns:none;grid-auto-flow:column;grid-template-rows:repeat(2,auto);grid-auto-columns:calc((100% - 16px)/3.3);overflow-x:auto;overscroll-behavior:contain;scrollbar-width:none}
+.tray.free{grid-template-columns:none;grid-auto-flow:column;grid-template-rows:auto;grid-auto-columns:calc((100% - 16px)/3.3);overflow-x:auto;overscroll-behavior:contain;scrollbar-width:none}
 .tray.free::-webkit-scrollbar{display:none}
 .tray.free .item{touch-action:pan-x}
 .item.on{border-color:var(--berry);background:#EFE9FF;box-shadow:inset 0 0 0 2px var(--berry)}
@@ -241,6 +241,25 @@ body{background:radial-gradient(circle,rgba(255,255,255,.6) 3px,transparent 4px)
  .item svg{height:72px;width:110px}
 }
 @media (prefers-reduced-motion:reduce){.shake,.doll .layer,.conf,.word{animation:none}.conf{display:none}.card,.tile{transition:none}}
+/* dress-up held sideways: big doll on the left, task and clothes on the right */
+@media (orientation:landscape) and (min-width:600px){
+ #dress{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);grid-template-rows:auto auto auto minmax(0,1fr);grid-template-areas:"top top" "stage ask" "stage tabs" "stage tray";column-gap:16px}
+ #dress>.top{grid-area:top}#dress>.ask{grid-area:ask}#dress>.stage{grid-area:stage}#dress>.tabs{grid-area:tabs}#dress>.tray{grid-area:tray}
+ #dress .tray{grid-template-columns:repeat(3,minmax(0,1fr));align-content:start;overflow-y:auto;min-height:0}
+ #dress .tray.free{grid-auto-flow:row;grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:none;grid-auto-rows:auto;grid-auto-columns:auto;overflow-x:hidden;overflow-y:auto;overscroll-behavior:contain}
+ #dress .tray.free .item{touch-action:pan-y}
+}
+/* short landscape screens (phone turned sideways): shrink the task box so the doll still fits */
+@media (orientation:landscape) and (min-width:600px) and (max-height:600px){
+ body{padding-block:6px}
+ #dress{row-gap:6px}
+ #dress .homeBtn,#dress .musicBtn{width:44px;height:44px;padding:5px}#dress .top h2{font-size:22px}#dress .stars{font-size:16px;padding:2px 10px}
+ #dress .ask{padding:4px 10px;border-width:3px}#dress .ask .lead{display:none}#dress .ask .w{font-size:24px;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+ #dress .askIco{width:36px;height:36px}#dress .say{width:44px;height:44px;font-size:20px}#dress .clear{font-size:14px;padding:5px 10px}
+ #dress .tab{padding:2px}#dress .tab span{display:none}#dress .tab svg{height:24px;width:40px}
+ #dress .tray{gap:6px}#dress .item{padding:4px 2px;border-radius:14px}#dress .item svg{height:34px;width:56px}#dress .item .n{font-size:12px}
+ #dress .thArrow{width:44px;height:44px;margin-top:-22px;padding:8px}
+}
 </style>
 
 <div id="app">
@@ -658,17 +677,19 @@ $('#clearAll').onclick=()=>{audio();hush();dress.worn=[];renderDoll();renderFree
 const pick=(c,el)=>dress.mode==='free'?chooseFree(c):dress.mode==='theme'?chooseTheme(c,el):choose(c,el);
 $('#sayAgain').onclick=()=>{audio();dress.mode==='theme'?sayTheme():sayAsk()};
 let dd=null;
-$('#tray').addEventListener('pointerdown',e=>{if(dress.mode==='free')return;const el=e.target.closest('.item');if(!el||el.classList.contains('used'))return;e.preventDefault();audio();
+$('#tray').addEventListener('pointerdown',e=>{const el=e.target.closest('.item');if(!el||el.classList.contains('used'))return;if(dress.mode!=='free')e.preventDefault();audio();
   const c=item(el.dataset.id);cancelDrag();dd={el,c,id:e.pointerId,x:e.clientX,y:e.clientY,moved:false,g:null};try{el.setPointerCapture(e.pointerId)}catch(_){}});
-window.addEventListener('pointermove',e=>{if(!dd||e.pointerId!==dd.id)return;if(!dd.moved&&Math.hypot(e.clientX-dd.x,e.clientY-dd.y)>10){dd.moved=true;dd.g=document.createElement('div');dd.g.className='ghost';dd.g.innerHTML=icon(dd.c);document.body.appendChild(dd.g)}
+window.addEventListener('pointermove',e=>{if(!dd||e.pointerId!==dd.id)return;
+  if(!dd.moved&&dress.mode==='free'&&Math.hypot(e.clientX-dd.x,e.clientY-dd.y)>10){const dx=Math.abs(e.clientX-dd.x),dy=Math.abs(e.clientY-dd.y),across=getComputedStyle($('#tray')).overflowX==='auto';if(across?dx>dy:dy>dx){dd=null;return}}
+  if(!dd.moved&&Math.hypot(e.clientX-dd.x,e.clientY-dd.y)>10){dd.moved=true;dd.g=document.createElement('div');dd.g.className='ghost';dd.g.innerHTML=icon(dd.c);document.body.appendChild(dd.g)}
   if(dd.g){dd.g.style.left=e.clientX+'px';dd.g.style.top=e.clientY+'px'}});
 function dropItem(e){if(!dd)return;if(e&&e.pointerId!==dd.id)return;const d=dd;dd=null;if(d.g)d.g.remove();if(!e)return;
-  if(!d.moved){pick(d.c,d.el);return}const r=$('#doll').getBoundingClientRect();
-  if(e.clientX>=r.left&&e.clientX<=r.right&&e.clientY>=r.top&&e.clientY<=r.bottom)pick(d.c,d.el)}
+  if(!d.moved){pick(d.c,d.el);return}const r=$(dress.mode==='free'?'#stage':'#doll').getBoundingClientRect();
+  if(e.clientX>=r.left&&e.clientX<=r.right&&e.clientY>=r.top&&e.clientY<=r.bottom){if(dress.mode==='free'&&dress.worn.includes(d.c.id))speak([[d.c.th,'th-TH'],[d.c.en,'en-US']]);else pick(d.c,d.el)}}
 window.addEventListener('pointerup',dropItem);window.addEventListener('pointercancel',e=>{if(dd&&e.pointerId===dd.id)cancelDrag()});
 window.addEventListener('blur',cancelDrag);document.addEventListener('visibilitychange',()=>{if(document.hidden)cancelDrag()});
 function cancelDrag(){dropItem(null);$$('.ghost').forEach(g=>g.remove())}
-$('#tray').addEventListener('click',e=>{if(e.detail!==0&&dress.mode!=='free')return;const el=e.target.closest('.item');if(!el)return;audio();pick(item(el.dataset.id),el)});
+$('#tray').addEventListener('click',e=>{if(e.detail!==0)return;const el=e.target.closest('.item');if(!el)return;audio();pick(item(el.dataset.id),el)});
 $('#doll').addEventListener('click',()=>{const w=dress.worn[dress.worn.length-1];if(w){const c=item(w);speak([[c.th,'th-TH'],[c.en,'en-US']])}});
 
 /* ---------- celebration ---------- */
