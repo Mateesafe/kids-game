@@ -476,7 +476,7 @@ const MODES={
 };
 
 /* ---------- navigation ---------- */
-function show(id){if(typeof cancelDrag==='function')cancelDrag();$$('.screen').forEach(s=>s.hidden=s.id!==id);if(id==='home')hush()}
+function show(id){if(typeof cancelDrag==='function')cancelDrag();if(typeof cur!=='undefined'&&cur.drag){cur.drag=null;setSel(null)}$$('.screen').forEach(s=>s.hidden=s.id!==id);if(id==='home')hush()}
 $$('[data-home]').forEach(b=>b.onclick=()=>{clearTimeout(dress.timer);$('#over').hidden=true;show('home')});
 $$('[data-go]').forEach(b=>b.onclick=()=>{audio();warm();const g=b.dataset.go;g==='dress'?openDressMenu():startMatch(g)});
 
@@ -508,7 +508,7 @@ play.addEventListener('pointermove',e=>{const d=cur.drag;if(!d)return;if(!d.move
 function endDrag(e){const d=cur.drag;if(!d)return;cur.drag=null;$$('.card.hover').forEach(x=>x.classList.remove('hover'));drawLines();
   if(!d.moved){tap(d.c);return}const t=e&&document.elementFromPoint(e.clientX,e.clientY)?.closest('.card');
   if(t&&t.dataset.side!==d.c.dataset.side&&!t.classList.contains('done'))tryMatch(d.c,t);else setSel(null)}
-play.addEventListener('pointerup',endDrag);play.addEventListener('pointercancel',()=>endDrag(null));
+addEventListener('pointerup',endDrag);addEventListener('pointercancel',()=>endDrag(null));addEventListener('blur',()=>endDrag(null));
 play.addEventListener('click',e=>{if(e.detail!==0)return;const c=e.target.closest('.card');if(c&&!c.classList.contains('done'))tap(c)});
 function tap(c){if(cur.sel&&cur.sel!==c&&cur.sel.dataset.side!==c.dataset.side){tryMatch(cur.sel,c);return}setSel(cur.sel===c?null:c)}
 function tryMatch(a,b){setSel(null);const l=a.dataset.side==='L'?a:b,r=l===a?b:a;
